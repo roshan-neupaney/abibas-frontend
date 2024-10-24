@@ -1,0 +1,78 @@
+// "use client";
+
+import Image from "next/image";
+
+interface CustomSearchInputProps {
+  title?: string;
+  value: any;
+  onChange?: any;
+  placeholder?: string;
+  style?: any;
+  type?: string;
+  disabled?: boolean;
+  search?: boolean;
+  rightIcon?: any;
+  iconClick?: any;
+  required?: boolean;
+  autoComplete?: string;
+  width?: string;
+}
+const CustomSearchInput = ({
+  title,
+  value,
+  onChange,
+  type,
+  placeholder,
+  disabled = false,
+  rightIcon = null,
+  iconClick = null,
+  style = {},
+  required = false,
+  autoComplete = "on",
+  width = "",
+}: CustomSearchInputProps) => {
+  return (
+    <div
+      className="flex flex-col items-start gap-0.5"
+      style={{ width: width }}
+    >
+      <div className="flex flex-col relative gap-2">
+        {title && (
+          <span className="label" style={{ color: "#1a1c1e" }}>
+            {title}
+            {required ? "*" : ""}
+          </span>
+        )}
+        <input
+          className="form-input"
+          value={value}
+          type={type}
+          onChange={(e) => {
+            if (type === "number") {
+              if (/[0-9]/.test(e.target.value) || e.target.value === "") {
+                onChange(e.target.value);
+              }
+            } else {
+              onChange(e.target.value);
+            }
+          }}
+          placeholder={placeholder}
+          disabled={disabled}
+          style={{
+            ...style,
+          }}
+          required={required}
+          autoComplete={autoComplete}
+        />
+        {rightIcon && (
+          <span className="absolute right-2 top-1/4" onClick={iconClick}>
+            <Image src={rightIcon} width={20} height={20} alt="" />
+          </span>
+        )}
+      </div>
+      
+    </div>
+  );
+};
+
+export default CustomSearchInput;
