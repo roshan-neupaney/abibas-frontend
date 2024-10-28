@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
+import ProductSlider from "./productSlider";
 
 interface MobileSliderProps {
   images: Array<Record<string, string>>;
@@ -13,8 +14,22 @@ const MobileSlider = ({ images }: MobileSliderProps) => {
   const [previousPosition, setPreviousPosition] = useState<any>(1);
   const [transition, setTransition] = useState("all 0.4s ease");
   useEffect(() => {
-    setPreviousPosition(containerRef?.current?.getBoundingClientRect().width);
-    setTranslate(containerRef?.current?.getBoundingClientRect().width);
+    const containerWidth = containerRef?.current?.getBoundingClientRect().width || 1;
+    setPreviousPosition(containerWidth);
+    setTranslate(containerWidth);
+    let index = 1;
+    const handleResize = () => {
+      index = translate/containerWidth;
+      setTranslate(window.innerWidth * index);
+      setPreviousPosition(window.innerWidth * index);
+    };
+
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   useEffect(() => {
@@ -68,6 +83,15 @@ const MobileSlider = ({ images }: MobileSliderProps) => {
     }
   };
 
+  const handleClick = (index: number) => {
+    if (containerRef.current) {
+      const container = containerRef.current.getBoundingClientRect();
+      setTransition("all 0.4s ease");
+      setTranslate(index * container.width);
+      setPreviousPosition(index * container.width);
+    }
+  };
+
   return (
     <div className="">
       <div className="w-full overflow-hidden ">
@@ -91,6 +115,22 @@ const MobileSlider = ({ images }: MobileSliderProps) => {
           })}
         </div>
       </div>
+      <div className="font-bold mt-4">
+        <div className="px-5">Colors available in size</div>
+        <ProductSlider className="pl-5 gap-[5px]">
+          {images.slice(1, images.length - 1).map((img, index) => {
+            return (
+              <div
+                className="relative min-w-[120px] aspect-square"
+                onClick={() => handleClick(index + 1)}
+              >
+                <Image src={img.image} fill alt="slider-image" />
+              </div>
+            );
+          })}
+        </ProductSlider>
+      </div>
+      <div className="px-5 pt-3 text-sm">Pulse Lime / Zero Metalic / Crystal Jade</div>
     </div>
   );
 };

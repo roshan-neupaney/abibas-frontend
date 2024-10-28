@@ -21,7 +21,7 @@ const ProductCard = ({
 }: ProductCardProps) => {
   const [liked, toggleLiked] = useState(false);
   return (
-    <Link href={'/detail/1'}>
+    <Link href={'/shoes/detail/1'}>
     <div
       className={`flex flex-col gap-3 w-72 bg-white ${className} border-black hover:lg:border`}
       id={id}

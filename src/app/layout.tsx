@@ -43,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${AdihausDIN.variable} ${AdineuePRO.variable} antialiased box-border`}
+        className={`${AdihausDIN.variable} ${AdineuePRO.variable} antialiased m-0 p-0 relative box-border h-screen overflow-visible`}
       >
         <ThemeProvider
           attribute="class"

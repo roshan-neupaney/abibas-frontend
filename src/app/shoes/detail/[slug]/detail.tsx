@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
-import MobileSlider from "../../../../components/mobileSlider";
+import MobileView from "../../../../../components/detailPage/mobileView";
+import DesktopView from "../../../../../components/detailPage/desktopView";
+import Dropdown from "../../../../../components/dropdown";
 
 const Detail = () => {
   const images = [
@@ -26,11 +28,13 @@ const Detail = () => {
       image: "/images/1.avif",
     },
   ];
-
   return (
     <div>
-      <div className=""></div>
-      <MobileSlider images={images} />
+      <MobileView images={images} />
+      <div>
+        <DesktopView images={images} />
+      
+      </div>
     </div>
   );
 };

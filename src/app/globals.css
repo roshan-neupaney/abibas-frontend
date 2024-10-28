@@ -178,3 +178,17 @@ body::-webkit-scrollbar {
                      var(--sb-track-color) !important;
   }
 }
+
+.my-button{
+  display: flex;
+}
+
+.my-button::before {
+  content: '';
+  position: absolute;
+  border: 1px solid black;
+  height: 3rem;
+  width: 100%;
+  right: -5px;
+  bottom: -5px;
+}

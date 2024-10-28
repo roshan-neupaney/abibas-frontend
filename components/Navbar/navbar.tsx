@@ -12,7 +12,7 @@ import CustomSearchInput from "@/subcomponents/searchInput";
 
 const Navbar = () => {
   return (
-    <div className="navbar-wrapper">
+    <div className="navbar-wrapper bg-inherit">
       <div className="notification-banner flex p-2 justify-center bg-[#000000] font-adihaus text-[11px] items-center h-11 font-bold">
         <span className="uppercase text-secondary">
           adiclub days: 9/25 - 10/2
@@ -60,19 +60,19 @@ const Navbar = () => {
             <Image src={FlagNepal} width={20} height={20} alt="" />
           </span>
         </div>
-        <div className="media-960:grid grid-cols-9 hidden px-4 xl:px-10">
+        <div className="media-960:grid grid-cols-9 hidden px-4 pb-3 xl:px-10">
           <div className="flex col-span-2 justify-start">
             <span className="">
               <Image
                 className="rotate-180 object-contain"
                 src={AdidasIcon}
                 height={48}
-                width={85}
+                width={70}
                 alt=""
               />
             </span>
           </div>
-          <div className="flex col-span-4 pb-3 gap-5 items-end uppercase lg:text-xs xl:text-sm xl:justify-center">
+          <div className="flex col-span-4 gap-5 items-end uppercase lg:text-xs xl:text-sm xl:justify-center">
             <div className="font-adihaus flex font-bold gap-5">
               <span>Men</span>
               <span>Women</span>
@@ -91,13 +91,13 @@ const Navbar = () => {
               placeholder="Search"
               rightIcon={SearchIcon}
             />
-            <span>
+            <span className="min-w-5">
               <Image src={ProfileIcon} width={20} height={20} alt="" />
             </span>
-            <span>
+            <span className="min-w-5">
               <Image src={FavoriteIcon} width={20} height={20} alt="" />
             </span>
-            <span>
+            <span className="min-w-5">
               <Image src={ShoppingBag} width={23} height={20} alt="" />
             </span>
           </div>
