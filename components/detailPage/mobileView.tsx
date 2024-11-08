@@ -1,11 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import MobileSlider from "../mobileSlider";
 import Link from "next/link";
 import { Button } from "@/subcomponents/button";
 import RightArrowIcon from "../../public/icon/right-arrow-white.svg";
+import DownArrowIcon from "../../public/icon/arrow-down.svg";
+import RightArrowBlackIcon from "../../public/icon/right-arrow-black.svg";
 import FavIcon from "../../public/icon/favorite.svg";
+import Dropdown from "../dropdown";
+import StarReview from "../starReview";
+import ReviewDropdownMB from "./reviewDropdownMB";
 
 const MobileView = ({ images }: any) => {
+  const [showReview, setShowReview] = useState<number>(2);
+  const review = [
+    {
+      name: "Hinton",
+      title: "Absolutely impressive",
+      message:
+        "Absolutely impressive color, size and comfort. Love the quality and design.",
+      createdAt: "November 4, 2024",
+      rating: 5,
+    },
+    {
+      name: "Btookkynella",
+      title: "I feel like an elf with wings when I wear them.",
+      message:
+        "They are light, comfortable and for me through a loop in Central Park, first time running in a long time. Adidas is cooler than ever! I already have three pairs, will buy more.",
+      createdAt: "November 4, 2024",
+      rating: 5,
+    },
+    {
+      name: "luispepe",
+      title: "perfect",
+      message: "I love this tennis shoes because they're very cocomfortable",
+      createdAt: "November 3, 2024",
+      rating: 5,
+    },
+    {
+      name: "Sade",
+      title: "I tried these on in Dicks and I had to order them.",
+      message:
+        "It is comfortable. Quite better than the name brands. It add support and cushion for your feet. The material in the front is breathable so you can count on the fact that your feet will be comfortable",
+      createdAt: "November 3, 2024",
+      rating: 5,
+    },
+  ];
   return (
     <div className="media-960:hidden">
       <div className="px-5 py-3">
@@ -64,17 +103,22 @@ const MobileView = ({ images }: any) => {
         </div>
       </div>
       <div className="mt-10 px-5 flex gap-3 flex-row">
-        <Button
-          title="add to bag"
-          sideIcon={RightArrowIcon}
-          iconHeight={40}
-          iconWidth={30}
-          className="my-button bg-black flex-1 h-12 items-center px-4 text-white uppercase translate-x-[-3px] translate-y-[-3px] "
-        />
+        <Link href={"/cart"} className="flex flex-1">
+          <Button
+            title="add to bag"
+            sideIcon={RightArrowIcon}
+            iconHeight={40}
+            iconWidth={30}
+            className="my-button bg-black flex-1 h-12 items-center px-4 text-white uppercase translate-x-[-3px] translate-y-[-3px] "
+          />
+        </Link>
         <Button
           sideIcon={FavIcon}
           className="px-[14px] h-12 justify-center items-center"
         />
+      </div>
+      <div className="mt-16">
+        <ReviewDropdownMB />
       </div>
     </div>
   );

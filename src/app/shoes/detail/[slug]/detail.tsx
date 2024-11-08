@@ -31,10 +31,7 @@ const Detail = () => {
   return (
     <div>
       <MobileView images={images} />
-      <div>
-        <DesktopView images={images} />
-      
-      </div>
+      <DesktopView images={images} />
     </div>
   );
 };

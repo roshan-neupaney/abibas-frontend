@@ -1,27 +1,31 @@
-'use client'
-import Image from 'next/image';
-import React, { useState } from 'react'
-import arrow from '../public/icon/arrow-right.svg'
+"use client";
+import Image from "next/image";
+import React, { useState } from "react";
+import arrow from "../public/icon/arrow-down.svg";
 
 interface DropdownProps {
-    review?: any;
-    title: string;
-    
+  children?: any;
+  title: string;
 }
 
-
-const Dropdown = ({review, title}: DropdownProps) => {
-    const [open, toggleOpen] = useState(false)
+const Dropdown = ({ children, title }: DropdownProps) => {
+  const [open, toggleOpen] = useState(false);
   return (
-    <div className='flex flex-1 flex-col border border-red-500 justify-center' onClick={() => toggleOpen(!open)}>
-        <div className='py-8 px-4 border border-blue-500 flex flex-1'>
-            <div className='font-bold'>{title}</div>
+    <div>
+      <div
+        className="flex flex-1 justify-between "
+        onClick={() => toggleOpen(!open)}
+      >
+        <div className="py-8 px-4 flex flex-1">
+          <div className="font-bold leading-6">{title}</div>
         </div>
-        <span className={`${open ? '-rotate-90' :'rotate-90'} transition-all duration-300`} >
-            <Image src={arrow} width={30} height={24} alt='arrow' />
+        <span className={`${open ? "rotate-180" : "rotate-0"} flex`}>
+          <Image src={arrow} width={30} height={30} alt="arrow" />
         </span>
+      </div>
+      {open && <div className="p-4">{children}</div>}
     </div>
-  )
-}
+  );
+};
 
-export default Dropdown
+export default Dropdown;

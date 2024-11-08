@@ -2,11 +2,17 @@ import { Button } from "@/subcomponents/button";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import RightArrowIcon from "../../public/icon/right-arrow-white.svg";
+
 import FavIcon from "../../public/icon/favorite.svg";
 import Dropdown from "../dropdown";
+import StarReview from "../starReview";
+import ReviewDropdownDesktop from "./reviewDropdownDP";
+import Link from "next/link";
 
 const DesktopView = ({ images }: any) => {
   const [sidebarMargin, setSidebarMargin] = useState(0);
+  const [showReview, setShowReview] = useState<number>(2);
+  
   // useEffect(() => {
   //   const handleScroll = (event: any) => {
   //     console.log(sidebarMargin, "first", window.scrollY);
@@ -27,13 +33,13 @@ const DesktopView = ({ images }: any) => {
   return (
     <div className="media-960:flex hidden">
       <div className="flex flex-1 flex-col">
-        <div className="border flex">
-          <span className="relative w-full aspect-square">
+        <div className="flex justify-center">
+          <span className="relative w-3/4 aspect-square">
             <Image src={"/images/5.avif"} fill alt="image" />
           </span>
         </div>
-        <div>
-          <Dropdown title="Review" />
+        <div className="media-960:px-5 xl:px-8 media-1440:px-10 2xl:px-16 max-w-[970px] w-full m-auto mt-20">
+          <ReviewDropdownDesktop />
         </div>
       </div>
       <div
@@ -108,6 +114,7 @@ const DesktopView = ({ images }: any) => {
           </div>
         </div>
         <div className="mt-10 flex gap-3 flex-row">
+        <Link href={"/cart"} className="flex flex-1">
           <Button
             title="add to bag"
             sideIcon={RightArrowIcon}
@@ -115,6 +122,7 @@ const DesktopView = ({ images }: any) => {
             iconWidth={30}
             className="my-button bg-black flex-1 h-12 items-center px-4 text-white uppercase translate-x-[-3px] translate-y-[-3px] "
           />
+          </Link>
           <Button
             sideIcon={FavIcon}
             className="px-[14px] h-12 justify-center items-center"

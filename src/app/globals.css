@@ -192,3 +192,17 @@ body::-webkit-scrollbar {
   right: -5px;
   bottom: -5px;
 }
+
+
+
+.greeting-card::after{
+  content: '';
+  width: 30px;
+  height: 30px;
+  background-color: #ECEFF1;
+  position: absolute;
+  transform: rotate(45deg);
+  /* transform: matrix(0, 2, -1, 0, 0, 0); */
+  bottom: -15px ;
+  left: 40px;
+}
