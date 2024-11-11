@@ -1,18 +1,30 @@
-"use client";
-
-import React, { useRef, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { Button } from "@/subcomponents/button";
 import NextIconBlack from "../../public/icon/right-arrow-black.svg";
 import NextIconWhite from "../../public/icon/right-arrow-white.svg";
 import ProductCard from "../../components/productCard";
 import ProductSlider from "../../components/productSlider";
-import MultiImageCard from "../../components/multiImageCard";
 import VideoImageCard from "../../components/videoImageCard";
+import { cookies } from "next/headers";
+import { ServerSideGet } from "@/utilities/apiCalls";
+import { CRUD_SHOE } from "../../config/endpoints";
 
-const MainPage = () => {
-  const [showNextButton, toggleNextButton] = useState(false);
-  const tempRef = useRef<HTMLDivElement>(null);
+interface shoeTypes {
+  status: boolean;
+  data: Array<Record<string, any>>;
+}
+
+async function getData(token: string) {
+  const response = [await ServerSideGet(token, CRUD_SHOE)];
+  const [shoes] = response;
+  return { shoes };
+}
+
+const MainPage = async () => {
+  const token = cookies().get("access_token")?.value || "";
+  const { shoes }: any = await getData(token);
+  console.log("shoes", shoes);
   const data = [
     { title: "Gazelle Bold Shoes", image: "/images/1.avif", category: "Men's" },
     { title: "Gazelle Bold Shoes", image: "/images/2.avif", category: "Men's" },
@@ -158,7 +170,7 @@ const MainPage = () => {
             />
           </picture>
         </div>
-        <div className="flex flex-col absolute bottom-4 md:bottom-16 w-full text-primary font-adihaus max-w-[550px] lg:max-w-[650px] gap-4 media-390:px-8 px-4 md:px-16 lg:px-28 ">
+        <div className="flex flex-col absolute bottom-4 md:bottom-16 w-full text-primary font-adihaus max-w-[550px] lg:max-w-[750px] gap-4 media-390:px-8 px-4 md:px-16 lg:px-28 ">
           <div className="flex-col flex gap-1">
             <span className="bg-white text-xl uppercase font-bold p-1 w-fit">
               up to 50% off
@@ -172,13 +184,19 @@ const MainPage = () => {
           </div>
           <div className="flex flex-wrap gap-2">
             <Button
-              title="Shop the sale"
+              title="Shop men"
               className="px-3 bg-white uppercase"
               style={{ backgroundColor: "#ffffff" }}
               sideIcon={NextIconBlack}
             />
             <Button
-              title="Discover Adiclub days"
+              title="shop women"
+              className="px-3 bg-white uppercase"
+              style={{ backgroundColor: "#ffffff" }}
+              sideIcon={NextIconBlack}
+            />
+            <Button
+              title="shop kids"
               className="px-3 bg-white uppercase"
               style={{ backgroundColor: "#ffffff" }}
               sideIcon={NextIconBlack}
@@ -194,13 +212,13 @@ const MainPage = () => {
           Still Interested?
         </span>
         <ProductSlider className="gap-4">
-          {data.map((items, index) => {
+          {shoes?.data?.map((items: any, index: number) => {
             return (
               <div key={index}>
                 <ProductCard
-                  title={items.title}
-                  category={items.category}
-                  image={items.image}
+                  title={items?.title}
+                  category={items?.category.title}
+                  image={items?.colorVariation[0].image_url}
                   className="md:w-[316px] xl:w-[380px]"
                   id={`snap_list_${index}`}
                 />
@@ -227,9 +245,9 @@ const MainPage = () => {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-[10px] media-600:hidden overflow-x-scroll slider-container">
-            {recommendedData.slice(0, 6)?.map((items) => {
+            {recommendedData.slice(0, 6)?.map((items, index) => {
               return (
-                <div className="col-span-1">
+                <div className="col-span-1" key={index}>
                   <ProductCard image={items.image} className="w-full" />
                 </div>
               );
@@ -318,7 +336,6 @@ const MainPage = () => {
           </div>
         </section>
       </div>
-      
     </div>
   );
 };

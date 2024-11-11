@@ -1,8 +1,10 @@
+'use client'
 import Image from "next/image";
 import React, { useState } from "react";
 import HollowFavIcon from "../public/icon/favorite.svg";
 import FilledFavIcon from "../public/icon/favorite-filled.svg";
 import Link from "next/link";
+import { IMAGE_URL } from "../config/constants";
 
 interface ProductCardProps {
   title?: string;
@@ -38,7 +40,7 @@ const ProductCard = ({
             alt=""
           />
         </span>
-        <Image src={image} width={600} height={0} alt="" />
+        <Image src={IMAGE_URL + image} width={600} height={0} alt="" />
         <span className="absolute bg-white text-sm text-black bottom-0 left-2 p-1">
           $120
         </span>
