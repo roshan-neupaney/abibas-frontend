@@ -12,6 +12,8 @@ interface ProductCardProps {
   category?: string;
   className?: string;
   id?: string;
+  routing_url?: string;
+
 }
 
 const ProductCard = ({
@@ -20,13 +22,13 @@ const ProductCard = ({
   category = "",
   className = "",
   id = "",
+  routing_url=''
 }: ProductCardProps) => {
   const [liked, toggleLiked] = useState(false);
   return (
-    <Link href={'/shoes/detail/1'}>
+    <Link href={`${routing_url}${id}`}>
     <div
       className={`flex flex-col gap-3 w-72 bg-white ${className} border-black hover:lg:border`}
-      id={id}
     >
       <span className="relative">
         <span

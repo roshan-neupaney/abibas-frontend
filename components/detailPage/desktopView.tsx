@@ -8,10 +8,12 @@ import Dropdown from "../dropdown";
 import StarReview from "../starReview";
 import ReviewDropdownDesktop from "./reviewDropdownDP";
 import Link from "next/link";
+import { IMAGE_URL } from "../../config/constants";
 
 const DesktopView = ({ images }: any) => {
   const [sidebarMargin, setSidebarMargin] = useState(0);
   const [showReview, setShowReview] = useState<number>(2);
+  const [imageUrl, setImageUrl] = useState(images[1].image)
   
   // useEffect(() => {
   //   const handleScroll = (event: any) => {
@@ -35,7 +37,7 @@ const DesktopView = ({ images }: any) => {
       <div className="flex flex-1 flex-col">
         <div className="flex justify-center">
           <span className="relative w-3/4 aspect-square">
-            <Image src={"/images/5.avif"} fill alt="image" />
+            <Image src={IMAGE_URL + imageUrl} fill alt="image" />
           </span>
         </div>
         <div className="media-960:px-5 xl:px-8 media-1440:px-10 2xl:px-16 max-w-[970px] w-full m-auto mt-20">
@@ -43,7 +45,7 @@ const DesktopView = ({ images }: any) => {
         </div>
       </div>
       <div
-        className={`relative border w-80 py-8 media-960:px-5 xl:px-8 xl:w-[430px] media-1440:px-10 media-1440:w-[450px] 2xl:px-14 2xl:w-[490px] min-h-screen`}
+        className={`relative w-80 py-8 media-960:px-5 xl:px-8 xl:w-[430px] media-1440:px-10 media-1440:w-[450px] 2xl:px-14 2xl:w-[490px] min-h-screen`}
         style={{
           marginTop: `${sidebarMargin}px`,
           transition: "transform 0.6s ease",
@@ -68,15 +70,17 @@ const DesktopView = ({ images }: any) => {
             <span>5.5</span>
           </div>
           <div className="mt-2.5 grid grid-cols-5 gap-[5px]">
-            {images.slice(1, images.length - 1).map((img: any) => {
+            {images.slice(1, images.length - 1).map((img: any, index: number) => {
               return (
-                <div className="col-span-1">
-                  <span className="">
+                <div className="col-span-1" key={index}>
+                  <span className="" onClick={() =>setImageUrl(img?.image)} >
                     <Image
-                      src={img.image}
+                      src={IMAGE_URL + img?.image}
                       width={300}
                       height={300}
                       alt="image"
+                      className="shoe-image-list cursor-pointer"
+                      style={{borderBottom: img?.image === imageUrl ? '3px solid black' : '3px solid transparent'}}
                     />
                   </span>
                 </div>

@@ -1,6 +1,6 @@
-'use client'
+"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import BurgerIcon from "../../public/icon/burger-menu.svg";
 import FavoriteIcon from "../../public/icon/favorite.svg";
 import AdidasIcon from "../../public/icon/adidas.png";
@@ -9,8 +9,11 @@ import SearchIcon from "../../public/icon/search.svg";
 import ShoppingBag from "../../public/icon/shopping-bag.svg";
 import FlagNepal from "../../public/icon/flag-nepal.svg";
 import CustomSearchInput from "@/subcomponents/searchInput";
+import LoginModal from "../modal/loginModal";
+import { defaultModalState } from "../../config/constants";
 
 const Navbar = () => {
+  const [openModal, toggleModal] = useState(defaultModalState);
   return (
     <div className="navbar-wrapper bg-inherit">
       <div className="notification-banner flex p-2 justify-center bg-[#000000] font-adihaus text-[11px] items-center h-11 font-bold">
@@ -84,14 +87,16 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="flex col-span-3 gap-5 pb-2 justify-end items-end">
+          <div className="flex col-span-3 gap-5 justify-end items-end">
             <CustomSearchInput
               value=""
-              onChange={() => {''}}
+              onChange={() => {
+                ("");
+              }}
               placeholder="Search"
               rightIcon={SearchIcon}
             />
-            <span className="min-w-5">
+            <span className="min-w-5" onClick={()=> toggleModal({id: '', state: true})}>
               <Image src={ProfileIcon} width={20} height={20} alt="" />
             </span>
             <span className="min-w-5">
@@ -103,6 +108,11 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      <LoginModal
+        open={openModal.state}
+        handleClose={() => toggleModal(defaultModalState)}
+        type=""
+      />
     </div>
   );
 };

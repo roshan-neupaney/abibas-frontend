@@ -4,34 +4,26 @@ import MobileView from "../../../../../components/detailPage/mobileView";
 import DesktopView from "../../../../../components/detailPage/desktopView";
 import Dropdown from "../../../../../components/dropdown";
 
-const Detail = () => {
-  const images = [
-    {
-      image: "/images/5.avif",
-    },
-    {
-      image: "/images/1.avif",
-    },
-    {
-      image: "/images/2.avif",
-    },
-    {
-      image: "/images/3.avif",
-    },
-    {
-      image: "/images/4.avif",
-    },
-    {
-      image: "/images/5.avif",
-    },
-    {
-      image: "/images/1.avif",
-    },
+interface DetailProps {
+  shoeDetails: Record<string, any>;
+}
+
+const Detail = ({ shoeDetails }: DetailProps) => {
+  console.log("shoeDetails", shoeDetails);
+
+  const lastImages = [
+    { image: shoeDetails.colorVariation.at(0).image_url },
+    { image: shoeDetails.colorVariation.at(1).image_url },
   ];
+  const images =
+    shoeDetails?.colorVariation?.map((items: any) => {
+      return { image: items?.image_url || "" };
+    }) || [];
+  const totalImages = [...images, ...lastImages];
   return (
     <div>
-      <MobileView images={images} />
-      <DesktopView images={images} />
+      <MobileView images={totalImages} />
+      <DesktopView images={totalImages} />
     </div>
   );
 };

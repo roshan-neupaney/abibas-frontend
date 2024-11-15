@@ -14,15 +14,14 @@ interface shoeTypes {
   status: boolean;
   data: Array<Record<string, any>>;
 }
-
-async function getData(token: string) {
+async function getData(token: string | undefined) {
   const response = [await ServerSideGet(token, CRUD_SHOE)];
   const [shoes] = response;
   return { shoes };
 }
 
 const MainPage = async () => {
-  const token = cookies().get("access_token")?.value || "";
+  const token = cookies().get("access_token")?.value;
   const { shoes }: any = await getData(token);
   console.log("shoes", shoes);
   const data = [
@@ -204,6 +203,7 @@ const MainPage = async () => {
           </div>
         </div>
       </div>
+      {shoes?.data?.length > 0 && 
       <div className="flex flex-col mt-10 mx-1 gap-2">
         <span
           className="font-bold text-3xl ml-2"
@@ -212,7 +212,7 @@ const MainPage = async () => {
           Still Interested?
         </span>
         <ProductSlider className="gap-4">
-          {shoes?.data?.map((items: any, index: number) => {
+          {shoes?.data?.map((items: Record<string, any> , index: number) => {
             return (
               <div key={index}>
                 <ProductCard
@@ -220,13 +220,15 @@ const MainPage = async () => {
                   category={items?.category.title}
                   image={items?.colorVariation[0].image_url}
                   className="md:w-[316px] xl:w-[380px]"
-                  id={`snap_list_${index}`}
+                  id={items.slug_url}
+                  routing_url= {'/shoes/detail/'}
                 />
               </div>
             );
           })}
         </ProductSlider>
       </div>
+      }
       <div className="flex px-4 media-390:px-8 md:pr-0 md:pl-14 xl:pl-28 xl:pr-0 mt-20 2xl:px-1">
         <section className="flex flex-col gap-5 w-full">
           <div className="flex justify-between">
@@ -262,13 +264,13 @@ const MainPage = async () => {
             </div>
           </div>
           <ProductSlider className="hidden media-600:flex gap-[10px] recommendedSlider">
-            {recommendedData.map((items, index) => {
+            {shoes.data.slice(0, 10).map((items: Record<string, any>, index: number) => {
               return (
                 <div key={index}>
                   <ProductCard
-                    title={items.title}
-                    category={items.category}
-                    image={items.image}
+                    title={items?.title}
+                    category={items?.category?.title}
+                    image={items?.colorVariation[0]?.image_url}
                     className="w-full mb-8 media-600:w-40 md:w-80 lg:w-52 media-1366:w-72"
                     id={`snap_list_${index}`}
                   />

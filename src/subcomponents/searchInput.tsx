@@ -44,7 +44,7 @@ const CustomSearchInput = ({
           </span>
         )}
         <input
-          className="form-input"
+          className="p-3 bg-[#ECEFF1] text-sm font-black focus:border-0"
           value={value}
           type={type}
           onChange={(e) => {
@@ -60,6 +60,7 @@ const CustomSearchInput = ({
           disabled={disabled}
           style={{
             ...style,
+            height: "35px"
           }}
           required={required}
           autoComplete={autoComplete}
