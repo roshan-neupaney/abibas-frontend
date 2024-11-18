@@ -6,9 +6,11 @@ import { IMAGE_URL } from "../config/constants";
 
 interface MobileSliderProps {
   images: Array<Record<string, string>>;
+  handleColorClick: any;
+  formData: Record<string, any>
 }
 
-const MobileSlider = ({ images }: MobileSliderProps) => {
+const MobileSlider = ({ images, handleColorClick, formData }: MobileSliderProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [translate, setTranslate] = useState<any>(1);
   const [previousMousePosition, setPreviousMousePosition] = useState<any>(0);
@@ -95,6 +97,8 @@ const MobileSlider = ({ images }: MobileSliderProps) => {
       setPreviousPosition(index * container.width);
     }
   };
+  // let colors = JSON.parse(formData.color || '[]');
+  // console.log(colors)
   return (
     <div className="">
       <div className="w-full overflow-hidden ">
@@ -112,20 +116,20 @@ const MobileSlider = ({ images }: MobileSliderProps) => {
           {images?.map((img, index) => {
             return (
               <div className="relative min-w-full aspect-square" key={index}>
-                <Image src={IMAGE_URL + img.image} fill alt="" />
+                <Image src={IMAGE_URL + img?.image_url} fill alt="" />
               </div>
             );
           })}
         </div>
       </div>
       <div className="font-bold mt-4">
-        <div className="px-5">Colors available in size</div>
+        <div className="px-5">Colors</div>
         <ProductSlider className="pl-5 gap-[5px]">
           {images?.slice(1, images.length - 1)?.map((img, index) => {
             return (
               <div
                 className="relative min-w-[120px] aspect-square"
-                onClick={() => handleClick(index + 1)}
+                onClick={() => {handleClick(index + 1); handleColorClick(img)}}
                 style={{
                   border:
                     imageIndex - 1 === index
@@ -135,14 +139,14 @@ const MobileSlider = ({ images }: MobileSliderProps) => {
                 }}
                 key={index}
               >
-                <Image src={IMAGE_URL + img.image} fill alt="slider-image" />
+                <Image src={IMAGE_URL + img?.image_url} fill alt="slider-image" />
               </div>
             );
           })}
         </ProductSlider>
       </div>
-      <div className="px-5 pt-3 text-sm">
-        Pulse Lime / Zero Metalic / Crystal Jade
+      <div className="px-5 pt-3 text-sm uppercase">
+        {JSON.parse(formData.color).join(' / ')}
       </div>
     </div>
   );

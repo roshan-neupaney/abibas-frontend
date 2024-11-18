@@ -9,21 +9,33 @@ interface DetailProps {
 }
 
 const Detail = ({ shoeDetails }: DetailProps) => {
-  console.log("shoeDetails", shoeDetails);
+  // console.log("shoeDetails", shoeDetails);
 
-  const lastImages = [
-    { image: shoeDetails.colorVariation.at(0).image_url },
-    { image: shoeDetails.colorVariation.at(1).image_url },
-  ];
+  //listing all images of colorVariation
   const images =
     shoeDetails?.colorVariation?.map((items: any) => {
-      return { image: items?.image_url || "" };
+      return items;
     }) || [];
-  const totalImages = [...images, ...lastImages];
+
+  //adding first two images at last position of images array
+  const finalImages = [...images, ...shoeDetails?.colorVariation.slice(0, 2)];
+
+  let allSizes: string[] = [];
+  shoeDetails?.colorVariation?.forEach((colorV: any) => {
+    colorV?.sizes?.forEach((s: any) => {
+      allSizes.push(s.size);
+    });
+  });
+  let totalSizes = allSizes?.reduce((result: string[], currentValue) => {
+    if (!result?.includes(currentValue)) {
+      result?.push(currentValue);
+    }
+    return result;
+  }, []);
   return (
     <div>
-      <MobileView images={totalImages} />
-      <DesktopView images={totalImages} />
+      <MobileView images={finalImages} totalSizes={totalSizes} shoeDetails={shoeDetails} />
+      <DesktopView images={finalImages} totalSizes={totalSizes} shoeDetails={shoeDetails} />
     </div>
   );
 };

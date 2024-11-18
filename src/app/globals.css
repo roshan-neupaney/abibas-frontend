@@ -226,3 +226,9 @@ body::-webkit-scrollbar {
 .shoe-image-list:hover {
   border-bottom: 3px solid black !important;
 }
+
+.detail-dropdown li::marker {
+  content: '\2022'; /* Custom marker */
+  color: black; /* Change marker color */
+  font-size: 1.2rem; /* Adjust size */
+}

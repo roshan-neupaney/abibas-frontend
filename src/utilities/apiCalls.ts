@@ -26,7 +26,6 @@ export const ServerSideGet = async (token: string | undefined, url: string) => {
       };
       const URL = url + "/" + id;
       const res = await SERVER_SIDE_GET(URL, token);
-      console.log(res)
       const { status, data } = res;
       if (status === 200) {
         response.data = data;

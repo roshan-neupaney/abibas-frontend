@@ -18,7 +18,6 @@ const DetailPage = async ({ params }: detailPageProps) => {
   const { slug } = params;
   const token = cookies().get("access_token")?.value;
   const { shoe_details }: any = await getData(slug, token);
-  console.log('shoe_details', shoe_details)
   return (
     <div className="">
       <Detail shoeDetails={shoe_details?.data} />
