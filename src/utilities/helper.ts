@@ -13,3 +13,14 @@ export const updateState = (
       });
     }
   };
+
+  export const FormatDate = (date: string) => {
+    const _date = new Date(date);
+    return _date.toLocaleDateString("En-Us", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  };
+
+  

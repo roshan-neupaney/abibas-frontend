@@ -146,7 +146,7 @@ const MobileSlider = ({ images, handleColorClick, formData }: MobileSliderProps)
         </ProductSlider>
       </div>
       <div className="px-5 pt-3 text-sm uppercase">
-        {JSON.parse(formData.color).join(' / ')}
+      {formData.color_variation?.color.join(" / ")}
       </div>
     </div>
   );

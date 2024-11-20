@@ -4,6 +4,7 @@ import { ThemeProvider } from "../../components/themeProvider";
 import Navbar from "../../components/Navbar/navbar";
 import localFont from "next/font/local";
 import Footer from "../../components/Footer/footer";
+import { Toaster } from "react-hot-toast";
 
 const AdihausDIN = localFont({
   src: [
@@ -51,6 +52,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Toaster />
           <Navbar />
           {children}
           <Footer />

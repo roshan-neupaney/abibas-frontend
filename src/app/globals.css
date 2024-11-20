@@ -232,3 +232,16 @@ body::-webkit-scrollbar {
   color: black; /* Change marker color */
   font-size: 1.2rem; /* Adjust size */
 }
+
+.option-box {
+  cursor: pointer;
+  display: flex;
+  position: absolute;
+  overflow: auto;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 8px;
+  background-color: #ffffff;
+  z-index: 10;
+  width: 100%;
+  transition: all 0.3s ease;
+}

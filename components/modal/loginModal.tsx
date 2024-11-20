@@ -5,6 +5,11 @@ import { useState } from "react";
 import { updateState } from "@/utilities/helper";
 import { Button, ButtonWithShadow } from "@/subcomponents/button";
 import RightArrow from '../../public/icon/right-arrow-white.svg'
+import { Login_Post } from "@/utilities/apiCalls";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { LOGIN } from "../../config/endpoints";
+import { loginValidation } from "@/utilities/validation";
 
 interface LoginModalProps {
   open: boolean;
@@ -19,6 +24,11 @@ const defaultForm = {
   password: "",
 };
 
+const defaultError = {
+  email: "",
+  password: "",
+}
+
 const LoginModal = ({
   open,
   handleClose,
@@ -26,6 +36,31 @@ const LoginModal = ({
   handleDelete,
 }: LoginModalProps) => {
   const [formData, setFormData] = useState(defaultForm);
+  const [formError, setFormError] = useState(defaultError)
+
+  const router = useRouter()
+  const handleSubmit = async() => {
+    try {
+      const { isValid, error }: any = loginValidation(formData);
+      if (isValid) {
+        const response = await Login_Post(LOGIN, formData);
+        const { status, data }: any = response;
+        if (status) {
+          // setCookies(data);
+          toast.success("Login Successful");
+          router.push("/admin/dashboard");
+          router.refresh();
+        } else {
+          toast.error(data.message);
+        }
+      } else {
+        toast.error("Validation Error");
+        setFormError(error);
+      }
+    } catch (e) {
+      toast.error("Login Unsuccessful");
+    }
+  }
   return (
     <>
       {open && (

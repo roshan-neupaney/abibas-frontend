@@ -9,6 +9,7 @@ interface ButtonProps {
   iconWidth?: number;
   iconHeight?: number;
   onClick?: any;
+  disabled?: boolean;
 }
 
 export const Button = ({
@@ -19,27 +20,36 @@ export const Button = ({
   iconWidth = 20,
   iconHeight = 20,
   onClick,
+  disabled = false,
 }: ButtonProps) => {
   return (
-    <div
+    <button
       className={`flex border border-black w-fit cursor-pointer ${className}`}
       style={{ ...style }}
       onClick={onClick}
+      disabled={disabled}
+      type="button"
     >
-      <div className="flex flex-1 justify-between items-center h-8 gap-2">
-        {title && <span className="font-bold leading-6">{title}</span>}
-        {sideIcon && (
-          <span>
-            <Image
-              src={sideIcon}
-              width={iconWidth}
-              height={iconHeight}
-              alt=""
-            />
-          </span>
-        )}
-      </div>
-    </div>
+      {!disabled ? (
+        <div className="flex flex-1 justify-between items-center h-8 gap-2">
+          {title && <span className="font-bold leading-6">{title}</span>}
+          {sideIcon && (
+            <span>
+              <Image
+                src={sideIcon}
+                width={iconWidth}
+                height={iconHeight}
+                alt=""
+              />
+            </span>
+          )}
+        </div>
+      ) : (
+        <div className="h-full flex flex-1 justify-center items-center">
+          <div className="border-2 border-b-transparent border-white h-1/2 aspect-square rounded-[50%] animate-spin"></div>
+        </div>
+      )}
+    </button>
   );
 };
 
@@ -51,26 +61,35 @@ export const ButtonWithShadow = ({
   iconWidth = 20,
   iconHeight = 20,
   onClick,
+  disabled = false,
 }: ButtonProps) => {
   return (
-    <div
+    <button
       className={`my-button flex border border-black w-fit cursor-pointer bg-black flex-1 h-12 items-center px-4 text-white uppercase translate-x-[-3px] translate-y-[-3px] ${className}`}
       style={{ ...style }}
       onClick={onClick}
+      type="button"
+      disabled={disabled}
     >
-      <div className="flex flex-1 justify-between items-center h-8 gap-2">
-        {title && <span className="font-bold leading-6">{title}</span>}
-        {sideIcon && (
-          <span>
-            <Image
-              src={sideIcon}
-              width={iconWidth}
-              height={iconHeight}
-              alt=""
-            />
-          </span>
-        )}
-      </div>
-    </div>
+      {!disabled ? (
+        <div className="flex flex-1 justify-between items-center h-8 gap-2">
+          {title && <span className="font-bold leading-6">{title}</span>}
+          {sideIcon && (
+            <span>
+              <Image
+                src={sideIcon}
+                width={iconWidth}
+                height={iconHeight}
+                alt=""
+              />
+            </span>
+          )}
+        </div>
+      ) : (
+        <div className="h-full flex flex-1 justify-center items-center">
+          <div className="border-2 border-b-transparent border-white h-1/2 aspect-square rounded-[50%] animate-spin"></div>
+        </div>
+      )}
+    </button>
   );
 };

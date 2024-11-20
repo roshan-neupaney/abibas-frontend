@@ -3,6 +3,8 @@ import Image from "next/image";
 import React from "react";
 import crossIcon from "../public/icon/cross.svg";
 import favoriteIcon from "../public/icon/favorite.svg";
+import CustomSelect from "@/utilities/select";
+import { quantityList } from "../config/constants";
 
 interface CartProductCardProps {
   productData: Record<string, any>;
@@ -19,23 +21,28 @@ const CartProductCard = ({ productData }: CartProductCardProps) => {
           alt="product-image"
         />
       </div>
-      <div className="flex flex-1">
-        <div className="py-5 pl-4 flex flex-1 flex-col uppercase h-fit">
-          <div className="flex justify-between">
-            <div>{productData.title}</div>
-            <div>${productData.price}</div>
+      <div className="flex flex-1 flex-col justify-between pl-8">
+        <div className="flex w-full">
+          <div className="py-5 flex flex-1 flex-col uppercase h-fit">
+            <div className="flex justify-between">
+              <div>{productData.title}</div>
+              <div>${productData.price}</div>
+            </div>
+            <div>{productData.color}</div>
+            <div className="mt-2.5">Size: {productData.size}</div>
           </div>
-          <div>{productData.color}</div>
-          <div className="mt-2.5">Size: {productData.size}</div>
+          <div className="">
+            <div className="p-4">
+              <Image src={crossIcon} width={25} height={25} alt="cross" />
+            </div>
+            <div className="px-4">
+              <Image src={favoriteIcon} width={25} height={25} alt="cross" />
+            </div>
+          </div>
         </div>
-        <div className="">
-          <div className="p-4">
-            <Image src={crossIcon} width={25} height={25} alt="cross" />
+          <div className="mb-5 w-24">
+            <CustomSelect title="" value={""} data={quantityList} onChange={() => {}} />
           </div>
-          <div className="px-4">
-            <Image src={favoriteIcon} width={25} height={25} alt="cross" />
-          </div>
-        </div>
       </div>
     </div>
   );
