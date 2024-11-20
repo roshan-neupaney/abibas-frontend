@@ -1,38 +1,44 @@
 import React from "react";
 import CartProductCard from "../../../components/cartProductCard";
 import { Button } from "@/subcomponents/button";
-import RightArrowIcon from '../../../public/icon/right-arrow-white.svg'
+import RightArrowIcon from "../../../public/icon/right-arrow-white.svg";
 import Link from "next/link";
+import { ServerSideGet } from "@/utilities/apiCalls";
+import { CRUD_ADD_TO_CART } from "../../../config/endpoints";
+import { cookies } from "next/headers";
 
-const CartPage = () => {
-  const products = [
-    {
-      title: "product 1",
-      price: 12.0,
-      size: "5.5",
-      image: "/images/2.avif",
-      color: "orange/white",
-    },
-    {
-      title: "product 2",
-      price: 13.0,
-      size: "5.5",
-      image: "/images/1.avif",
-      color: "black/white",
-    },
-    {
-      title: "product 3",
-      price: 14.5,
-      size: "5.5",
-      image: "/images/4.avif",
-      color: "orange/white",
-    },
-  ];
-  const totalPrice = products.reduce(
-    (result, items) => result + items.price,
-    0
-  );
-  console.log("totalPrice", totalPrice);
+async function getData(token: string) {
+  try {
+    const response = [await ServerSideGet(token, CRUD_ADD_TO_CART)];
+    const [cartItems] = response;
+    return { cartItems };
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+const CartPage = async () => {
+  const token = cookies().get("access_token")?.value || "";
+  const { cartItems }: any = await getData(token);
+  console.log("cartItems", cartItems);
+  
+  const itemsPrice = cartItems.data
+    .reduce(
+      (result: number, items: Record<string, any>) =>
+        result + items?.shoe?.price * items?.count,
+      0
+    )
+    .toFixed(2);
+
+  const deliveryCharge = (0).toFixed(2);
+
+  const tax = (itemsPrice * 0.1).toFixed(2);
+  const totalPrice = (
+    Number(itemsPrice) +
+    Number(tax) +
+    Number(deliveryCharge)
+  ).toFixed(2);
+
   return (
     <div className="px-4 media-960:flex-row flex flex-col gap-10 max-w-[1280px] m-auto">
       {/* list of items */}
@@ -55,17 +61,17 @@ const CartPage = () => {
         </div>
         <div className="mt-4">
           <span className="uppercase"> Total: </span>
-          <span>{`(${products.length} items)`}</span>{" "}
-          <span className="font-bold">${totalPrice}</span>
+          <span>{`(${cartItems.data.length} items)`}</span>{" "}
+          <span className="font-bold">${itemsPrice}</span>
         </div>
         <div className="mt-2.5">
           Items in your bag are not reserved — check out now to make them yours.
         </div>
         <div className="flex flex-col gap-10 mt-10">
-          {products?.map((items, i) => {
+          {cartItems?.data?.map((items: Record<string, any>, i: number) => {
             return (
               <div key={i}>
-                <CartProductCard productData={items} />
+                <CartProductCard productData={items} token={token} />
               </div>
             );
           })}
@@ -80,31 +86,33 @@ const CartPage = () => {
             Order Summary
           </div>
           <div className="flex justify-between">
-            <span>{products.length} items</span>
-            <span>${totalPrice}</span>
+            <span>{cartItems?.data?.length} items</span>
+            <span>${itemsPrice}</span>
           </div>
           <div className="flex justify-between">
             <span>Sales Tax</span>
-            <span>${totalPrice * 0.13}</span>
+            <span>${tax}</span>
           </div>
           <div className="flex justify-between">
             <span>Delivery</span>
-            <span>Free</span>
+            <span>
+              {Number(deliveryCharge) ? "$" + deliveryCharge : "Free"}
+            </span>
           </div>
           <div className="flex justify-between mt-5 font-bold">
             <span>Total</span>
-            <span>${totalPrice + totalPrice * 0.13}</span>
+            <span>${totalPrice}</span>
           </div>
         </div>
         <div>
-        <Link href="/cart" className="flex flex-1 mt-10">
-          <Button
-            title="checkout"
-            sideIcon={RightArrowIcon}
-            iconHeight={40}
-            iconWidth={30}
-            className="my-button bg-black flex-1 h-12 items-center px-4 text-white uppercase translate-x-[-3px] translate-y-[-3px] "
-          />
+          <Link href="/cart" className="flex flex-1 mt-10">
+            <Button
+              title="checkout"
+              sideIcon={RightArrowIcon}
+              iconHeight={40}
+              iconWidth={30}
+              className="my-button bg-black flex-1 h-12 items-center px-4 text-white uppercase translate-x-[-3px] translate-y-[-3px] "
+            />
           </Link>
         </div>
       </div>

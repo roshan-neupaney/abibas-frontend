@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { Button } from "@/subcomponents/button";
 import NextIconBlack from "../../../public/icon/right-arrow-black.svg";
@@ -10,8 +10,6 @@ import ProductSlider from "../../../components/productSlider";
 import VideoImageCard from "../../../components/videoImageCard";
 
 const ShoesPage = () => {
-  const [showNextButton, toggleNextButton] = useState(false);
-  const tempRef = useRef<HTMLDivElement>(null);
   const data = [
     { title: "Gazelle Bold Shoes", image: "/images/1.avif", category: "Men's" },
     { title: "Gazelle Bold Shoes", image: "/images/2.avif", category: "Men's" },
@@ -226,9 +224,9 @@ const ShoesPage = () => {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-[10px] media-600:hidden overflow-x-scroll slider-container">
-            {recommendedData.slice(0, 6)?.map((items) => {
+            {recommendedData.slice(0, 6)?.map((items, index) => {
               return (
-                <div className="col-span-1">
+                <div className="col-span-1" key={index}>
                   <ProductCard image={items.image} className="w-full" />
                 </div>
               );
@@ -263,12 +261,14 @@ const ShoesPage = () => {
         <ProductSlider className="gap-[10px]">
           {featuredData.map((items, index) => {
             return (
-              <VideoImageCard
-                title={items.title}
-                image={items.image}
-                description={items.description}
-                className="min-w-[calc((100%-10px)/1.187)] md:min-w-[calc((100%-20px)/2.43)] media-960:min-w-[calc((100%-40px)/4)]"
-              />
+              <React.Fragment key={index}>
+                <VideoImageCard
+                  title={items.title}
+                  image={items.image}
+                  description={items.description}
+                  className="min-w-[calc((100%-10px)/1.187)] md:min-w-[calc((100%-20px)/2.43)] media-960:min-w-[calc((100%-40px)/4)]"
+                />
+              </React.Fragment>
             );
           })}
         </ProductSlider>
@@ -317,7 +317,6 @@ const ShoesPage = () => {
           </div>
         </section>
       </div>
-      
     </div>
   );
 };

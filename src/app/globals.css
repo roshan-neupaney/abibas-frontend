@@ -245,3 +245,18 @@ body::-webkit-scrollbar {
   width: 100%;
   transition: all 0.3s ease;
 }
+
+.option-box {
+  --sb-track-color: #f8f7f7;
+  --sb-thumb-color: #f1e6e6;
+}
+
+.option-box::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.option-box::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 10px;
+}

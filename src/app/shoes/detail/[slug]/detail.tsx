@@ -2,7 +2,6 @@
 import React from "react";
 import MobileView from "../../../../../components/detailPage/mobileView";
 import DesktopView from "../../../../../components/detailPage/desktopView";
-import Dropdown from "../../../../../components/dropdown";
 
 interface DetailProps {
   shoeDetails: Record<string, any>;
@@ -21,13 +20,13 @@ const Detail = ({ shoeDetails={}, token='' }: DetailProps) => {
   //adding first two images at last position of images array
   const finalImages = [...images, ...shoeDetails?.colorVariation?.slice(0, 2)];
 
-  let allSizes: string[] = [];
+  const allSizes: string[] = [];
   shoeDetails?.colorVariation?.forEach((colorV: any) => {
     colorV?.sizes?.forEach((s: any) => {
       allSizes.push(s.size);
     });
   });
-  let totalSizes = allSizes?.reduce((result: string[], currentValue) => {
+  const totalSizes = allSizes?.reduce((result: string[], currentValue) => {
     if (!result?.includes(currentValue)) {
       result?.push(currentValue);
     }

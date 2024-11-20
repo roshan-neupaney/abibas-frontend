@@ -19,25 +19,25 @@ const Footer = () => {
               A leader in athletic performance since 1949
             </h1>
             <p className="text-justify leading-[22px]">
-              We're inspired by athletes. From the very first track spikes Adi
+              We&apos;re inspired by athletes. From the very first track spikes Adi
               Dassler made in his workshop, creating the best gear for the
               athlete is what drives us to pursue technological breakthroughs
               and design innovations. Our sneakers and apparel are worn by
-              world-record holders and medal winners, but it's just as important
+              world-record holders and medal winners, but it&apos;s just as important
               that road runners, weekend hikers, recreational soccer players,
               and fitness enthusiasts. From adidas Boost, the game-changing
               cushioning technology, to the world-beating design of Adizero
               Adios Pro running shoes to Terrex outdoor gear to soccer cleats
-              with unbeatable touch, we're always iterating, innovating and
+              with unbeatable touch, we&apos;re always iterating, innovating and
               improving with athletes in mind.
               <br />
               <br />
               The 3-Stripes have appeared on medal stands all around the world,
-              but they've also had an influence that extends far beyond the
+              but they&apos;ve also had an influence that extends far beyond the
               field of play. adidas sneakers have been worn by hip-hop
               performers, skaters, artists and all the other change-makers who
               move the culture forward with their vision and uncompromising
-              style. We've made our mark with legendary lifestyle shoes like the
+              style. We&apos;ve made our mark with legendary lifestyle shoes like the
               adidas Superstar, the Stan Smith and the Samba, shoes that began
               as athletic footwear before hitting the streets and leaving an
               indelible impression on the culture.

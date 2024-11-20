@@ -21,8 +21,8 @@ const DetailDropdown = ({ data }: DetailDropdownProps) => {
   return (
     <Dropdown title="Details">
       <ul className="detail-dropdown grid grid-cols-1 media-960:grid-cols-2">
-        {detailList?.map((items) => {
-          return <li className="col-span-1 mt-4 pl-3">{items}</li>;
+        {detailList?.map((items, index) => {
+          return <li className="col-span-1 mt-4 pl-3" key={index}>{items}</li>;
         })}
       </ul>
     </Dropdown>

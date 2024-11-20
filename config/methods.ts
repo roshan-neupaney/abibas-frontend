@@ -49,3 +49,15 @@ export const SERVER_SIDE_GET = async (url: string, token: string | undefined) =>
       return e.response;
     }
   };
+
+  export const DELETE = async (url:string, token:string | undefined) => {
+    try {
+      return await axios
+        .delete(BASE_URL + url, { headers: { Authorization: token } })
+        .then((res) => {
+          return res;
+        });
+    } catch (e:any) {
+      return e.response;
+    }
+  };

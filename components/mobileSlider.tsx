@@ -55,7 +55,7 @@ const MobileSlider = ({ images, handleColorClick, formData }: MobileSliderProps)
         }, 400);
       }
     }
-  }, [previousPosition]);
+  }, [previousPosition, images.length]);
   const handleMove = (e: any) => {
     if (containerRef.current) {
       setPreviousMousePosition(e.touches[0].clientX);
@@ -97,8 +97,6 @@ const MobileSlider = ({ images, handleColorClick, formData }: MobileSliderProps)
       setPreviousPosition(index * container.width);
     }
   };
-  // let colors = JSON.parse(formData.color || '[]');
-  // console.log(colors)
   return (
     <div className="">
       <div className="w-full overflow-hidden ">

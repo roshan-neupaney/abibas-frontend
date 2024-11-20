@@ -1,23 +1,24 @@
-// "use client";
+"use client";
 
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
+import { CSSProperties } from "react";
 
 interface CustomInputProps {
   title?: string;
-  value: any;
-  onChange?: any;
+  value: string | number;
+  onChange?: (value: string) => void;
   placeholder?: string;
-  style?: any;
+  style?: CSSProperties;
   type?: string;
   disabled?: boolean;
   search?: boolean;
-  rightIcon?: any;
+  rightIcon?: string | StaticImageData;
   multiline?: boolean;
-  iconClick?: any;
+  iconClick?: () => void;
   rows?: number;
   error?: string;
   required?: boolean;
-  autoComplete?: string;
+  autoComplete?: 'on' | 'off';
   width?: string;
 }
 const CustomInput = ({
@@ -27,8 +28,8 @@ const CustomInput = ({
   type,
   placeholder,
   disabled = false,
-  rightIcon = null,
-  iconClick = null,
+  rightIcon,
+  iconClick,
   multiline = false,
   rows,
   style = {},
@@ -57,10 +58,10 @@ const CustomInput = ({
             onChange={(e) => {
               if (type === "number") {
                 if (/[0-9]/.test(e.target.value) || e.target.value === "") {
-                  onChange(e.target.value);
+                  onChange?.(e.target.value);
                 }
               } else {
-                onChange(e.target.value);
+                onChange?.(e.target.value);
               }
             }}
             placeholder={placeholder}
@@ -78,7 +79,7 @@ const CustomInput = ({
             value={value}
             rows={rows}
             onChange={(e) => {
-              onChange(e.target.value);
+              onChange?.(e.target.value);
             }}
             placeholder={placeholder}
             disabled={disabled}

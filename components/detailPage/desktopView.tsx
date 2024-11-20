@@ -14,6 +14,7 @@ import { JsonPost } from "@/utilities/apiCalls";
 import { CRUD_ADD_TO_CART, CRUD_FAVORITE } from "../../config/endpoints";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import clearCachesByServerAction from "../../hooks/revalidate";
 
 interface DesktopViewProps {
   images: Array<Record<string, any>>;
@@ -43,23 +44,23 @@ const DesktopView = ({
   const router = useRouter();
 
   useEffect(() => {
-    let temp = [];
+    const temp: string[] = [];
     images[1].sizes.forEach((size: Record<string, any>) => {
       temp.push(size.size);
       setColorSizesAvailable(temp);
     });
-  }, []);
+  }, [images]);
 
   useEffect(() => {
     if (!colorSizesAvailable.includes(formData.size)) {
       updateState("size", "", setFormData);
     }
-  }, [formData.color_variation]);
+  }, [formData.color_variation, colorSizesAvailable, formData.size]);
 
   const handleColorClick = (colorDetail: Record<string, any>) => {
     setImageUrl(colorDetail?.image_url);
     updateState("color_variation", colorDetail, setFormData);
-    let temp = [];
+    const temp: string[] = [];
     colorDetail.sizes.forEach((size: Record<string, any>) => {
       temp.push(size.size);
       setColorSizesAvailable(temp);
@@ -82,13 +83,13 @@ const DesktopView = ({
     setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
-      console.log("beautifiedPayload", beautifiedPayload);
       const { isValid, error } = AddToCartValidation(beautifiedPayload);
       if (isValid) {
         const res = await JsonPost(CRUD_ADD_TO_CART, beautifiedPayload, token);
         const { status }: any = res;
         if (status) {
           toast.success("Added to cart successfully");
+          clearCachesByServerAction('/cart')
           setFormError(defaultError);
           setLoading(false);
           router.push("/cart");
@@ -178,7 +179,7 @@ const DesktopView = ({
       >
         <div className="">
           <div className="flex flex-wrap justify-between">
-            <div className="flex gap-0.5">Women's</div>
+            <div className="flex gap-0.5">{shoeDetails?.category?.title}</div>
             <div className="review-bar"></div>
           </div>
           <div

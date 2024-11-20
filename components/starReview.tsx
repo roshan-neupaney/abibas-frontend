@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import StarFilled from "../public/icon/star-favorite-filled.svg";
 import StarEmpty from "../public/icon/star-favorite-empty.svg";
 import StarHalfEmpty from "../public/icon/star-favorite-half-filled.svg";
@@ -10,7 +10,7 @@ const StarReview = ({
   starWidth = 16,
   starHeight = 16,
 }) => {
-  // const [rating, setRating] = useState(0);
+  
   return (
     <div className="flex gap-0.5">
       {[...Array(totalStars)].map((_, index) => (

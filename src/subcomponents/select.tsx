@@ -81,14 +81,16 @@ const CustomSelect = ({
     if (value) {
       if (typeof value === "string") {
         data?.forEach((element) => {
-          if (element?.id.includes(value)) {
+          if (element?.id === value ) {
+            console.log(element.id)
             setSelectedValue(element?.label);
           }
         });
       }
     }
   }, [data, value]);
-
+  console.log(value, "selectedValue", selectedValue)
+  console.log('data', data)
   const dropdownPosition = useDropdownPosition(
     openBox,
     inputBoxRef,
@@ -102,7 +104,7 @@ const CustomSelect = ({
   }, []);
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
-  }, []);
+  }, [handleClickOutside]);
 
   return (
     <div
@@ -160,7 +162,8 @@ const CustomSelect = ({
                   toggleBox(!openBox);
                   onChange?.(elements?.id);
                 }}
-                className="p-2 flex  hover:bg-[#dcdce6]"
+                className={`p-2 flex  hover:bg-[#dcdce6]`}
+                style={{backgroundColor: selectedValue === elements.label ? '#EAEEEF' : '' }}
               >
                 {elements.label}
               </div>

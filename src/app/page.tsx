@@ -10,10 +10,6 @@ import { cookies } from "next/headers";
 import { ServerSideGet } from "@/utilities/apiCalls";
 import { CRUD_SHOE } from "../../config/endpoints";
 
-interface shoeTypes {
-  status: boolean;
-  data: Array<Record<string, any>>;
-}
 async function getData(token: string | undefined) {
   const response = [await ServerSideGet(token, CRUD_SHOE)];
   const [shoes] = response;
@@ -23,60 +19,6 @@ async function getData(token: string | undefined) {
 const MainPage = async () => {
   const token = cookies().get("access_token")?.value;
   const { shoes }: any = await getData(token);
-  console.log("shoes", shoes);
-  const data = [
-    { title: "Gazelle Bold Shoes", image: "/images/1.avif", category: "Men's" },
-    { title: "Gazelle Bold Shoes", image: "/images/2.avif", category: "Men's" },
-    { title: "Japan Shoes", image: "/images/3.avif", category: "Men's" },
-    {
-      title: "Gazelle Indoor Shoes",
-      image: "/images/4.avif",
-      category: "Men's",
-    },
-    { title: "Gazelle Bold Shoes", image: "/images/5.avif", category: "Men's" },
-    {
-      title: "Gazelle Indoor Shoes",
-      image: "/images/6.avif",
-      category: "Men's",
-    },
-    { title: "Gazelle Bold Shoes", image: "/images/7.avif", category: "Men's" },
-    { title: "Japan Shoes", image: "/images/8.avif", category: "Men's" },
-    {
-      title: "Anthony Edwards 1 Mid Basketball Shoes",
-      image: "/images/9.avif",
-      category: "Men's",
-    },
-    {
-      title: "Anthony Edwards 1 Mid Basketball Shoes",
-      image: "/images/1.avif",
-      category: "Men's",
-    },
-    {
-      title: "Anthony Edwards 1 Mid Basketball Shoes",
-      image: "/images/3.avif",
-      category: "Men's",
-    },
-    {
-      title: "Anthony Edwards 1 Mid Basketball Shoes",
-      image: "/images/6.avif",
-      category: "Men's",
-    },
-    {
-      title: "Anthony Edwards 1 Mid Basketball Shoes",
-      image: "/images/1.avif",
-      category: "Men's",
-    },
-    {
-      title: "Anthony Edwards 1 Mid Basketball Shoes",
-      image: "/images/3.avif",
-      category: "Men's",
-    },
-    {
-      title: "Anthony Edwards 1 Mid Basketball Shoes",
-      image: "/images/6.avif",
-      category: "Men's",
-    },
-  ];
   const recommendedData = [
     { title: "Gazelle Bold Shoes", image: "/images/1.avif", category: "Men's" },
     { title: "Gazelle Bold Shoes", image: "/images/2.avif", category: "Men's" },
@@ -143,7 +85,6 @@ const MainPage = async () => {
     },
   ];
 
-  // console.log('position', position)
   return (
     <div>
       <div className="flex relative">
@@ -203,32 +144,32 @@ const MainPage = async () => {
           </div>
         </div>
       </div>
-      {shoes?.data?.length > 0 && 
-      <div className="flex flex-col mt-10 mx-1 gap-2">
-        <span
-          className="font-bold text-3xl ml-2"
-          style={{ fontFamily: "var(--font-adineue)" }}
-        >
-          Still Interested?
-        </span>
-        <ProductSlider className="gap-4">
-          {shoes?.data?.map((items: Record<string, any> , index: number) => {
-            return (
-              <div key={index}>
-                <ProductCard
-                  title={items?.title}
-                  category={items?.category.title}
-                  image={items?.colorVariation[0].image_url}
-                  className="md:w-[316px] xl:w-[380px]"
-                  id={items.slug_url}
-                  routing_url= {'/shoes/detail/'}
-                />
-              </div>
-            );
-          })}
-        </ProductSlider>
-      </div>
-      }
+      {shoes?.data?.length > 0 && (
+        <div className="flex flex-col mt-10 mx-1 gap-2">
+          <span
+            className="font-bold text-3xl ml-2"
+            style={{ fontFamily: "var(--font-adineue)" }}
+          >
+            Still Interested?
+          </span>
+          <ProductSlider className="gap-4">
+            {shoes?.data?.map((items: Record<string, any>, index: number) => {
+              return (
+                <div key={index}>
+                  <ProductCard
+                    title={items?.title}
+                    category={items?.category.title}
+                    image={items?.colorVariation[0].image_url}
+                    className="md:w-[316px] xl:w-[380px]"
+                    id={items.slug_url}
+                    routing_url={"/shoes/detail/"}
+                  />
+                </div>
+              );
+            })}
+          </ProductSlider>
+        </div>
+      )}
       <div className="flex px-4 media-390:px-8 md:pr-0 md:pl-14 xl:pl-28 xl:pr-0 mt-20 2xl:px-1">
         <section className="flex flex-col gap-5 w-full">
           <div className="flex justify-between">
@@ -264,19 +205,21 @@ const MainPage = async () => {
             </div>
           </div>
           <ProductSlider className="hidden media-600:flex gap-[10px] recommendedSlider">
-            {shoes.data.slice(0, 10).map((items: Record<string, any>, index: number) => {
-              return (
-                <div key={index}>
-                  <ProductCard
-                    title={items?.title}
-                    category={items?.category?.title}
-                    image={items?.colorVariation[0]?.image_url}
-                    className="w-full mb-8 media-600:w-40 md:w-80 lg:w-52 media-1366:w-72"
-                    id={`snap_list_${index}`}
-                  />
-                </div>
-              );
-            })}
+            {shoes.data
+              .slice(0, 10)
+              .map((items: Record<string, any>, index: number) => {
+                return (
+                  <div key={index}>
+                    <ProductCard
+                      title={items?.title}
+                      category={items?.category?.title}
+                      image={items?.colorVariation[0]?.image_url}
+                      className="w-full mb-8 media-600:w-40 md:w-80 lg:w-52 media-1366:w-72"
+                      id={`snap_list_${index}`}
+                    />
+                  </div>
+                );
+              })}
           </ProductSlider>
         </section>
       </div>
@@ -284,12 +227,14 @@ const MainPage = async () => {
         <ProductSlider className="gap-[10px]">
           {featuredData.map((items, index) => {
             return (
-              <VideoImageCard
-                title={items.title}
-                image={items.image}
-                description={items.description}
-                className="min-w-[calc((100%-10px)/1.187)] md:min-w-[calc((100%-20px)/2.43)] media-960:min-w-[calc((100%-40px)/4)]"
-              />
+              <React.Fragment key={index}>
+                <VideoImageCard
+                  title={items.title}
+                  image={items.image}
+                  description={items.description}
+                  className="min-w-[calc((100%-10px)/1.187)] md:min-w-[calc((100%-20px)/2.43)] media-960:min-w-[calc((100%-40px)/4)]"
+                />
+              </React.Fragment>
             );
           })}
         </ProductSlider>

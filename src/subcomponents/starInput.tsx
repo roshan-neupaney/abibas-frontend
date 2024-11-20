@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import StarFilled from "../../public/icon/star-favorite-filled.svg";
 import StarEmpty from "../../public/icon/star-favorite-empty.svg";
 import StarHalfEmpty from "../../public/icon/star-favorite-half-filled.svg";
@@ -26,7 +26,6 @@ const StarInput = ({
   required = false,
   error=''
 }: StarInputProps) => {
-  // const [rating, setRating] = useState(0);
   return (
     <div>
       {title && <div className="font-bold mb-2.5">{title}{required && <span>*</span>}</div>}

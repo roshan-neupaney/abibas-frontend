@@ -11,6 +11,7 @@ import FlagNepal from "../../public/icon/flag-nepal.svg";
 import CustomSearchInput from "@/subcomponents/searchInput";
 import LoginModal from "../modal/loginModal";
 import { defaultModalState } from "../../config/constants";
+import Link from "next/link";
 
 const Navbar = () => {
   const [openModal, toggleModal] = useState(defaultModalState);
@@ -31,15 +32,17 @@ const Navbar = () => {
           </span>
         </div>
         <div className="col-span-1 flex justify-center items-center">
-          <span>
-            <Image
-              className="rotate-180"
-              src={AdidasIcon}
-              width={50}
-              height={50}
-              alt=""
-            />
-          </span>
+          <Link href={"/"}>
+            <span>
+              <Image
+                className="rotate-180"
+                src={AdidasIcon}
+                width={50}
+                height={50}
+                alt=""
+              />
+            </span>
+          </Link>
         </div>
         <div className="col-span-2 flex gap-5 p-2 justify-end items-center">
           <span>
@@ -65,15 +68,17 @@ const Navbar = () => {
         </div>
         <div className="media-960:grid grid-cols-9 hidden px-4 pb-3 xl:px-10">
           <div className="flex col-span-2 justify-start">
-            <span className="">
-              <Image
-                className="rotate-180 object-contain"
-                src={AdidasIcon}
-                height={48}
-                width={70}
-                alt=""
-              />
-            </span>
+            <Link href={"/"}>
+              <span className="">
+                <Image
+                  className="rotate-180 object-contain"
+                  src={AdidasIcon}
+                  height={48}
+                  width={70}
+                  alt=""
+                />
+              </span>
+            </Link>
           </div>
           <div className="flex col-span-4 gap-5 items-end uppercase lg:text-xs xl:text-sm xl:justify-center">
             <div className="font-adihaus flex font-bold gap-5">
@@ -96,22 +101,26 @@ const Navbar = () => {
               placeholder="Search"
               rightIcon={SearchIcon}
             />
-            <span className="min-w-5" onClick={()=> toggleModal({id: '', state: true})}>
+            <span
+              className="min-w-5"
+              onClick={() => toggleModal({ id: "", state: true })}
+            >
               <Image src={ProfileIcon} width={20} height={20} alt="" />
             </span>
             <span className="min-w-5">
               <Image src={FavoriteIcon} width={20} height={20} alt="" />
             </span>
-            <span className="min-w-5">
-              <Image src={ShoppingBag} width={23} height={20} alt="" />
-            </span>
+            <Link href={"/cart"}>
+              <span className="min-w-5">
+                <Image src={ShoppingBag} width={23} height={20} alt="" />
+              </span>
+            </Link>
           </div>
         </div>
       </div>
       <LoginModal
         open={openModal.state}
         handleClose={() => toggleModal(defaultModalState)}
-        type=""
       />
     </div>
   );

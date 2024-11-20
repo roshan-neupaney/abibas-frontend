@@ -42,22 +42,22 @@ const MobileView = ({
   const router = useRouter();
 
   useEffect(() => {
-    let temp = [];
+    const temp: string[] = [];
     images[1].sizes.forEach((size: Record<string, any>) => {
       temp.push(size.size);
       setColorSizesAvailable(temp);
     });
-  }, []);
+  }, [images]);
 
   useEffect(() => {
     if (!colorSizesAvailable.includes(formData.size)) {
       updateState("size", "", setFormData);
     }
-  }, [formData.color_variation]);
+  }, [formData.color_variation, colorSizesAvailable, formData.size]);
 
   const handleColorClick = (colorDetail: Record<string, any>) => {
     updateState("color_variation", colorDetail, setFormData);
-    let temp = [];
+    const temp: string[] = [];
     colorDetail.sizes.forEach((size: Record<string, any>) => {
       temp.push(size.size);
       setColorSizesAvailable(temp);
@@ -80,7 +80,6 @@ const MobileView = ({
     setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
-      console.log("beautifiedPayload", beautifiedPayload);
       const { isValid, error } = AddToCartValidation(beautifiedPayload);
       if (isValid) {
         const res = await JsonPost(CRUD_ADD_TO_CART, beautifiedPayload, token);
@@ -143,7 +142,7 @@ const MobileView = ({
             </Link>
             /{" "}
             <Link href={"/shoes?category=Men's"}>
-              <span className="underline">Men's</span>
+              <span className="underline">{shoeDetails?.category?.title}</span>
             </Link>
           </div>
           <div className="review-bar"></div>

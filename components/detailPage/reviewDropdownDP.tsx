@@ -71,7 +71,7 @@ const ReviewDropdownDesktop = ({
   };
   const averageRating = Number(
     (
-      review.reduce((result, value) => result + value.rate, 0) / review.length
+      (review.reduce((result, value) => result + value.rate, 0) / review.length) || 0
     ).toFixed(1)
   );
   return (
