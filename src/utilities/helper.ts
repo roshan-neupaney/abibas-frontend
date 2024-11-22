@@ -23,4 +23,10 @@ export const updateState = (
     });
   };
 
-  
+  export function DecodeJWT(token: string) {
+    try {
+      const jwt = Buffer.from(token.split(".")[1], "base64").toString();
+      return JSON.parse(jwt);
+    } catch (e) {}
+    return {};
+  }

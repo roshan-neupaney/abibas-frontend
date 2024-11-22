@@ -13,6 +13,7 @@ import { CRUD_RATING } from "../../config/endpoints";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { ReviewValidation } from "@/utilities/validation";
+import useStore from "../../zustand/store";
 
 interface ReviewDropdownMBProps {
   token: string;
@@ -38,6 +39,7 @@ const ReviewDropdownMB = ({ token, id, review }: ReviewDropdownMBProps) => {
   const [reviewForm, setReviewForm] = useState(defaultForm);
   const [formError, setFormError] = useState(defaultError);
   const router = useRouter();
+  const { toggleLoginModalTrue } = useStore();
 
   const handleSubmit = async () => {
     try {
@@ -48,12 +50,14 @@ const ReviewDropdownMB = ({ token, id, review }: ReviewDropdownMBProps) => {
           { ...reviewForm, shoe_id: id },
           token
         );
-        const { status }: any = res;
+        const { status, statusCode }: any = res;
         if (status) {
           toast.success("Review submitted successfully");
           setFormError(defaultError);
           setReviewForm(defaultForm);
           router.refresh();
+        } else if(statusCode === 401) {
+          toggleLoginModalTrue()
         } else {
           toast.error("Error while Submiting review");
         }
@@ -68,13 +72,13 @@ const ReviewDropdownMB = ({ token, id, review }: ReviewDropdownMBProps) => {
   
   const averageRating = Number(
     (
-      review.reduce((result, value) => result + value.rate, 0) / review.length
+      review?.reduce((result, value) => result + value.rate, 0) / review?.length
     ).toFixed(1)
   );
 
   return (
     <>
-      <Dropdown title={`Review (${review.length})`}>
+      <Dropdown title={`Review (${review?.length || 0})`}>
         <div className="flex flex-col">
           <div className="flex gap-2.5">
             <div
@@ -147,7 +151,7 @@ const ReviewDropdownMB = ({ token, id, review }: ReviewDropdownMBProps) => {
               </div>
             </div>
           )}
-          {review.slice(0, showReview).map((items, i) => {
+          {review?.slice(0, showReview)?.map((items, i) => {
             const createdAt = FormatDate(items.createdAt);
             return (
               <div key={i} className="border-b py-5">
@@ -167,7 +171,7 @@ const ReviewDropdownMB = ({ token, id, review }: ReviewDropdownMBProps) => {
               </div>
             );
           })}
-          {review.length > showReview && (
+          {review?.length > showReview && (
             <div className="flex justify-center mt-8">
               <div>
                 <Button

@@ -13,6 +13,7 @@ import { JsonPost } from "@/utilities/apiCalls";
 import toast from "react-hot-toast";
 import { ReviewValidation } from "@/utilities/validation";
 import { useRouter } from "next/navigation";
+import useStore from "../../zustand/store";
 
 interface ReviewDropdownDesktopProps {
   token: string;
@@ -42,6 +43,7 @@ const ReviewDropdownDesktop = ({
   const [reviewForm, setReviewForm] = useState(defaultForm);
   const [formError, setFormError] = useState(defaultError);
   const router = useRouter();
+  const { toggleLoginModalTrue } = useStore();
 
   const handleSubmit = async () => {
     try {
@@ -52,12 +54,15 @@ const ReviewDropdownDesktop = ({
           { ...reviewForm, shoe_id: id },
           token
         );
-        const { status }: any = res;
+        const { status, statusCode }: any = res;
+        console.log(status);
         if (status) {
           toast.success("Review submitted successfully");
           setFormError(defaultError);
           setReviewForm(defaultForm);
           router.refresh();
+        } else if (statusCode === 401) {
+          toggleLoginModalTrue();
         } else {
           toast.error("Error while Submiting review");
         }
@@ -71,12 +76,13 @@ const ReviewDropdownDesktop = ({
   };
   const averageRating = Number(
     (
-      (review.reduce((result, value) => result + value.rate, 0) / review.length) || 0
+      review?.reduce((result, value) => result + value.rate, 0) /
+        review?.length || 0
     ).toFixed(1)
   );
   return (
     <>
-      <Dropdown title={`Review (${review.length})`}>
+      <Dropdown title={`Review (${review?.length})`}>
         <div className="flex justify-between">
           <div className="flex gap-2.5">
             <div
@@ -155,7 +161,7 @@ const ReviewDropdownDesktop = ({
             </div>
           </div>
         )}
-        {review.slice(0, showReview).map((items, i) => {
+        {review?.slice(0, showReview)?.map((items, i) => {
           const createdAt = FormatDate(items?.createdAt);
           return (
             <div
@@ -186,7 +192,7 @@ const ReviewDropdownDesktop = ({
             </div>
           );
         })}
-        {review.length > showReview && (
+        {review?.length > showReview && (
           <div className="flex justify-center mt-8">
             <div>
               <Button

@@ -10,11 +10,15 @@ import ShoppingBag from "../../public/icon/shopping-bag.svg";
 import FlagNepal from "../../public/icon/flag-nepal.svg";
 import CustomSearchInput from "@/subcomponents/searchInput";
 import LoginModal from "../modal/loginModal";
-import { defaultModalState } from "../../config/constants";
 import Link from "next/link";
+import useStore from '../../zustand/store'
 
-const Navbar = () => {
-  const [openModal, toggleModal] = useState(defaultModalState);
+interface NavbarProps {
+  setCookies: (val:string) => void;
+}
+
+const Navbar = ({setCookies}: NavbarProps) => {
+  const { status, toggleLoginModalTrue , toggleLoginModalFalse} = useStore();
   return (
     <div className="navbar-wrapper bg-inherit">
       <div className="notification-banner flex p-2 justify-center bg-[#000000] font-adihaus text-[11px] items-center h-11 font-bold">
@@ -103,7 +107,7 @@ const Navbar = () => {
             />
             <span
               className="min-w-5"
-              onClick={() => toggleModal({ id: "", state: true })}
+              onClick={() => toggleLoginModalTrue()}
             >
               <Image src={ProfileIcon} width={20} height={20} alt="" />
             </span>
@@ -119,8 +123,9 @@ const Navbar = () => {
         </div>
       </div>
       <LoginModal
-        open={openModal.state}
-        handleClose={() => toggleModal(defaultModalState)}
+        setCookies={setCookies}
+        open={status}
+        handleClose={() => toggleLoginModalFalse()}
       />
     </div>
   );

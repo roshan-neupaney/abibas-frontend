@@ -5,6 +5,11 @@ import { useState } from "react";
 import { updateState } from "@/utilities/helper";
 import { ButtonWithShadow } from "@/subcomponents/button";
 import RightArrow from "../../public/icon/right-arrow-white.svg";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { Login_Post } from "@/utilities/apiCalls";
+import { loginValidation } from "@/utilities/validation";
+import { LOGIN } from "../../config/endpoints";
 // import { Login_Post } from "@/utilities/apiCalls";
 // import { useRouter } from "next/navigation";
 // import toast from "react-hot-toast";
@@ -14,8 +19,7 @@ import RightArrow from "../../public/icon/right-arrow-white.svg";
 interface LoginModalProps {
   open: boolean;
   handleClose: any;
-  openModal?: any;
-  handleDelete?: any;
+  setCookies: (val: string) => void
 }
 
 const defaultForm = {
@@ -23,39 +27,39 @@ const defaultForm = {
   password: "",
 };
 
-// const defaultError = {
-//   email: "",
-//   password: "",
-// };
+const defaultError = {
+  email: "",
+  password: "",
+};
 
-const LoginModal = ({ open, handleClose, handleDelete }: LoginModalProps) => {
+const LoginModal = ({ open, handleClose, setCookies }: LoginModalProps) => {
   const [formData, setFormData] = useState(defaultForm);
-  // const [formError, setFormError] = useState(defaultError);
+  const [formError, setFormError] = useState(defaultError);
 
-  // const router = useRouter();
-  // const handleSubmit = async () => {
-  //   try {
-  //     const { isValid, error }: any = loginValidation(formData);
-  //     if (isValid) {
-  //       const response = await Login_Post(LOGIN, formData);
-  //       const { status, data }: any = response;
-  //       if (status) {
-  //         // setCookies(data);
-  //         toast.success("Login Successful");
-  //         router.push("/admin/dashboard");
-  //         router.refresh();
-  //       } else {
-  //         toast.error(data.message);
-  //       }
-  //     } else {
-  //       toast.error("Validation Error");
-  //       setFormError(error);
-  //     }
-  //   } catch (e) {
-  //     toast.error("Login Unsuccessful");
-  //     console.error(e);
-  //   }
-  // };
+  const router = useRouter();
+  const handleSubmit = async () => {
+    try {
+      const { isValid, error }: any = loginValidation(formData);
+      if (isValid) {
+        const response = await Login_Post(LOGIN, formData);
+        const { status, data }: any = response;
+        if (status) {
+          setCookies(data?.access_token);
+          toast.success("Login Successful");
+          handleClose();
+          router.refresh();
+        } else {
+          toast.error(data.message);
+        }
+      } else {
+        toast.error("Validation Error");
+        setFormError(error);
+      }
+    } catch (e) {
+      toast.error("Login Unsuccessful");
+      console.error(e);
+    }
+  };
   return (
     <>
       {open && (
@@ -98,7 +102,7 @@ const LoginModal = ({ open, handleClose, handleDelete }: LoginModalProps) => {
               <div className="">
                 <ButtonWithShadow
                   title="Continue"
-                  onClick={handleDelete}
+                  onClick={handleSubmit}
                   sideIcon={RightArrow}
                   className=""
                 />

@@ -18,7 +18,7 @@ const Detail = ({ shoeDetails={}, token='' }: DetailProps) => {
     }) || [];
 
   //adding first two images at last position of images array
-  const finalImages = [...images, ...shoeDetails?.colorVariation?.slice(0, 2)];
+  const finalImages = [...images, ...shoeDetails?.colorVariation?.slice(0, 2) || []];
 
   const allSizes: string[] = [];
   shoeDetails?.colorVariation?.forEach((colorV: any) => {

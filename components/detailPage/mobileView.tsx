@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import { JsonPost } from "@/utilities/apiCalls";
 import { CRUD_ADD_TO_CART, CRUD_FAVORITE } from "../../config/endpoints";
 import { AddToCartValidation } from "@/utilities/validation";
+import useStore from "../../zustand/store";
 
 interface MobileViewProps {
   images: Array<Record<string, any>>;
@@ -40,10 +41,11 @@ const MobileView = ({
   const [formError, setFormError] = useState(defaultError);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { toggleLoginModalTrue } = useStore();
 
   useEffect(() => {
     const temp: string[] = [];
-    images[1].sizes.forEach((size: Record<string, any>) => {
+    images[1]?.sizes?.forEach((size: Record<string, any>) => {
       temp.push(size.size);
       setColorSizesAvailable(temp);
     });
@@ -83,12 +85,14 @@ const MobileView = ({
       const { isValid, error } = AddToCartValidation(beautifiedPayload);
       if (isValid) {
         const res = await JsonPost(CRUD_ADD_TO_CART, beautifiedPayload, token);
-        const { status }: any = res;
+        const { status, statusCode }: any = res;
         if (status) {
           toast.success("Added to cart successfully");
           setFormError(defaultError);
           setLoading(false);
           router.push("/cart");
+        } else if (statusCode === 401) {
+          toggleLoginModalTrue();
         } else {
           setLoading(false);
           toast.error("Error while adding to cart");

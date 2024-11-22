@@ -89,8 +89,6 @@ const CustomSelect = ({
       }
     }
   }, [data, value]);
-  console.log(value, "selectedValue", selectedValue)
-  console.log('data', data)
   const dropdownPosition = useDropdownPosition(
     openBox,
     inputBoxRef,

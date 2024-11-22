@@ -15,6 +15,7 @@ import { CRUD_ADD_TO_CART, CRUD_FAVORITE } from "../../config/endpoints";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import clearCachesByServerAction from "../../hooks/revalidate";
+import useStore from "../../zustand/store";
 
 interface DesktopViewProps {
   images: Array<Record<string, any>>;
@@ -33,7 +34,7 @@ const DesktopView = ({
   shoeDetails,
   token,
 }: DesktopViewProps) => {
-  const [imageUrl, setImageUrl] = useState(images[1].image_url);
+  const [imageUrl, setImageUrl] = useState(images[1]?.image_url);
   const [colorSizesAvailable, setColorSizesAvailable] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     size: "",
@@ -42,10 +43,11 @@ const DesktopView = ({
   const [formError, setFormError] = useState(defaultError);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { toggleLoginModalTrue } = useStore();
 
   useEffect(() => {
     const temp: string[] = [];
-    images[1].sizes.forEach((size: Record<string, any>) => {
+    images[1]?.sizes?.forEach((size: Record<string, any>) => {
       temp.push(size.size);
       setColorSizesAvailable(temp);
     });
@@ -86,13 +88,16 @@ const DesktopView = ({
       const { isValid, error } = AddToCartValidation(beautifiedPayload);
       if (isValid) {
         const res = await JsonPost(CRUD_ADD_TO_CART, beautifiedPayload, token);
-        const { status }: any = res;
+        const { status, statusCode }: any = res;
         if (status) {
           toast.success("Added to cart successfully");
           clearCachesByServerAction('/cart')
           setFormError(defaultError);
           setLoading(false);
           router.push("/cart");
+        } else if (statusCode === 401) {
+          toggleLoginModalTrue();
+          setLoading(false);
         } else {
           setLoading(false);
           toast.error("Error while adding to cart");

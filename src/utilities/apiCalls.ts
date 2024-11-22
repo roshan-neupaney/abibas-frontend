@@ -66,15 +66,18 @@ export const ServerSideGet = async (token: string | undefined, url: string) => {
       const response = {
         data: "",
         status: false,
+        statusCode: ''
       };
       const res = await POST(url, payload, token);
       const { status, data } = res;
       if (status === 201) {
         response.data = data;
         response.status = true;
+        response.statusCode = status;
       } else {
         response.data = data.message;
         response.status = false;
+        response.statusCode = status;
       }
       return response;
     } catch (e) {
