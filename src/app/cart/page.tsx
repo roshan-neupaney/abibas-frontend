@@ -1,6 +1,6 @@
 import React from "react";
 import CartProductCard from "../../../components/cartProductCard";
-import { Button } from "@/subcomponents/button";
+import { Button, ButtonWithShadow } from "@/subcomponents/button";
 import RightArrowIcon from "../../../public/icon/right-arrow-white.svg";
 import Link from "next/link";
 import { ServerSideGet } from "@/utilities/apiCalls";
@@ -20,8 +20,7 @@ async function getData(token: string) {
 const CartPage = async () => {
   const token = cookies().get("access_token")?.value || "";
   const { cartItems }: any = await getData(token);
-  console.log("cartItems", cartItems);
-  
+
   const itemsPrice = cartItems.data
     .reduce(
       (result: number, items: Record<string, any>) =>
@@ -38,6 +37,10 @@ const CartPage = async () => {
     Number(tax) +
     Number(deliveryCharge)
   ).toFixed(2);
+
+  const totalItems = cartItems?.data?.reduce(
+    (result: number, items: Record<string, any>) => result + items.count, 0
+  );
 
   return (
     <div className="px-4 media-960:flex-row flex flex-col gap-10 max-w-[1280px] m-auto">
@@ -61,7 +64,7 @@ const CartPage = async () => {
         </div>
         <div className="mt-4">
           <span className="uppercase"> Total: </span>
-          <span>{`(${cartItems.data.length} items)`}</span>{" "}
+          <span>{`(${totalItems} items)`}</span>{" "}
           <span className="font-bold">${itemsPrice}</span>
         </div>
         <div className="mt-2.5">
@@ -86,7 +89,7 @@ const CartPage = async () => {
             Order Summary
           </div>
           <div className="flex justify-between">
-            <span>{cartItems?.data?.length} items</span>
+            <span>{totalItems} items</span>
             <span>${itemsPrice}</span>
           </div>
           <div className="flex justify-between">
@@ -105,8 +108,8 @@ const CartPage = async () => {
           </div>
         </div>
         <div>
-          <Link href="/cart" className="flex flex-1 mt-10">
-            <Button
+          <Link href="/checkout" className="flex flex-1 mt-10">
+            <ButtonWithShadow
               title="checkout"
               sideIcon={RightArrowIcon}
               iconHeight={40}

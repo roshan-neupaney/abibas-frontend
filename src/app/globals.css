@@ -11,6 +11,12 @@ body {
   font-family: var(--font-adihaus);
 }
 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -20,6 +20,7 @@ interface CustomInputProps {
   required?: boolean;
   autoComplete?: 'on' | 'off';
   width?: string;
+  className?: string;
 }
 const CustomInput = ({
   title,
@@ -37,11 +38,15 @@ const CustomInput = ({
   required = false,
   autoComplete = "on",
   width = "",
+  className = ''
 }: CustomInputProps) => {
+  const handleWheel = (event: React.WheelEvent<HTMLInputElement>) => {
+    event.currentTarget.blur();
+  };
   return (
     <div
-      className="flex flex-1 flex-col items-start gap-0.5 self-stretch"
-      style={{ width: width }}
+      className={`flex flex-1 flex-col items-start gap-0.5 self-stretch ${className}`}
+      style={{ width: width,...style }}
     >
       <div className="flex flex-col self-stretch relative gap-2">
         {title && (
@@ -72,6 +77,7 @@ const CustomInput = ({
             }}
             required={required}
             autoComplete={autoComplete}
+            onWheel={handleWheel}
           />
         ) : (
           <textarea

@@ -18,6 +18,7 @@ interface CustomSelectProps {
   style?: React.CSSProperties;
   required?: boolean;
   error?: string;
+  className?: string;
   sx?: React.CSSProperties;
 }
 
@@ -69,6 +70,7 @@ const CustomSelect = ({
   style = {},
   required = false,
   error = "",
+  className = "",
   sx = {},
 }: CustomSelectProps) => {
   const [openBox, toggleBox] = useState(false);
@@ -106,7 +108,7 @@ const CustomSelect = ({
 
   return (
     <div
-      className="flex flex-1 flex-col items-start gap-0.5 self-stretch"
+      className={`flex flex-1 flex-col items-start gap-0.5 self-stretch ${className}`}
       ref={inputBoxRef}
       style={{ ...sx }}
     >
@@ -147,7 +149,7 @@ const CustomSelect = ({
           className={`${
             openBox ? "max-h-60 border border-[#92959a]" : "max-h-[0]"
           } ${
-            dropdownPosition === "top" ? "bottom-[51px]" : "top-[59px]"
+            dropdownPosition === "top" ? "bottom-[51px]" : "top-[85px]"
           } option-box `}
           ref={dropdownOptionRef}
         >
