@@ -40,7 +40,7 @@ const DesktopView = ({
     size: "",
     color_variation: images[1],
   });
-  console.log("images", images);
+  // console.log("images", images);
   const [formError, setFormError] = useState(defaultError);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -49,7 +49,7 @@ const DesktopView = ({
   useEffect(() => {
     const temp: string[] = [];
     images[1]?.sizes?.forEach((size: Record<string, any>) => {
-      if (!!size.stock) {
+      if (!(size?.stock === "0")) {
         temp.push(size.size);
         setColorSizesAvailable(temp);
       }
@@ -67,8 +67,11 @@ const DesktopView = ({
     updateState("color_variation", colorDetail, setFormData);
     const temp: string[] = [];
     colorDetail.sizes.forEach((size: Record<string, any>) => {
-      temp.push(size.size);
-      setColorSizesAvailable(temp);
+      if (!(size?.stock === "0")) {
+        console.log(size.stock);
+        temp.push(size?.size);
+        setColorSizesAvailable(temp);
+      }
     });
   };
 
@@ -183,7 +186,7 @@ const DesktopView = ({
         </div>
       </div>
       <div
-        className={`w-80 py-8 media-960:px-5 xl:px-8 xl:w-[430px] media-1440:px-10 media-1440:w-[450px] 2xl:px-14 2xl:w-[490px] min-h-screen`}
+        className={`w-80 py-8 media-960:px-5 xl:px-8 xl:w-[430px] media-1440:px-10 media-1440:w-[450px] 2xl:px-14 2xl:w-[490px] min-h-screen sticky top-0`}
       >
         <div className="">
           <div className="flex flex-wrap justify-between">
