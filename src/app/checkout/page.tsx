@@ -48,11 +48,10 @@ const Page = async () => {
     Number(tax) +
     Number(deliveryCharge)
   ).toFixed(2);
-  // console.log(cartItems.data);
+
   return (
     <div>
       <div className="py-4 border-y">
-
         <div
           className="m-auto max-w-[1175px] uppercase text-lg font-bold tracking-[1px] p-4"
           style={{ fontFamily: "var(--font-adineue)" }}
@@ -90,7 +89,11 @@ const Page = async () => {
                 >
                   Address
                 </div>
-                <DeliveryAddressForm Locations={locations?.data} />
+                <DeliveryAddressForm
+                  Locations={locations?.data}
+                  cartItems={cartItems?.data}
+                  {...{ tax, totalPrice, token, deliveryCharge, itemsPrice }}
+                />
               </div>
             </div>
             <aside className="w-1/3 items ml-20 hidden media-960:block">

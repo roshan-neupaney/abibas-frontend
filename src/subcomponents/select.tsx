@@ -171,7 +171,7 @@ const CustomSelect = ({
           })}
         </div>
       </div>
-      <div className="error-label h-1">{error}</div>
+      <div className="text-red-500 text-xs">{error}</div>
     </div>
   );
 };

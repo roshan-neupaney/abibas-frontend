@@ -40,6 +40,7 @@ const DesktopView = ({
     size: "",
     color_variation: images[1],
   });
+  console.log("images", images);
   const [formError, setFormError] = useState(defaultError);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -48,8 +49,10 @@ const DesktopView = ({
   useEffect(() => {
     const temp: string[] = [];
     images[1]?.sizes?.forEach((size: Record<string, any>) => {
-      temp.push(size.size);
-      setColorSizesAvailable(temp);
+      if (!!size.stock) {
+        temp.push(size.size);
+        setColorSizesAvailable(temp);
+      }
     });
   }, [images]);
 
@@ -91,7 +94,7 @@ const DesktopView = ({
         const { status, statusCode }: any = res;
         if (status) {
           toast.success("Added to cart successfully");
-          clearCachesByServerAction('/cart')
+          clearCachesByServerAction("/cart");
           setFormError(defaultError);
           setLoading(false);
           router.push("/cart");

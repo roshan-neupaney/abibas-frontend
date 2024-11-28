@@ -5,6 +5,13 @@ import CustomSelect from "@/subcomponents/select";
 import { updateState } from "@/utilities/helper";
 import React, { useEffect, useState } from "react";
 import RightArrowIcon from "../../public/icon/right-arrow-white.svg";
+import toast from "react-hot-toast";
+import useStore from "../../zustand/store";
+import { JsonPost } from "@/utilities/apiCalls";
+import { CRUD_ORDER } from "../../config/endpoints";
+import clearCachesByServerAction from "../../hooks/revalidate";
+import { useRouter } from "next/navigation";
+import { AddOrderValidation } from "@/utilities/validation";
 
 const defaultForm = {
   firstName: "",
@@ -18,28 +25,34 @@ const defaultForm = {
 const defaultError = {
   firstName: "",
   lastName: "",
-  address: "",
+  province: "",
+  district: "",
+  municipality: "",
   phone: "",
 };
 
-const DeliveryAddressForm = ({ Locations }: any) => {
+const DeliveryAddressForm = ({ Locations, cartItems, tax, totalPrice, token, deliveryCharge, itemsPrice }: any) => {
   const [formData, setFormData] = useState(defaultForm);
   const [formError, setFormError] = useState(defaultError);
   const [beautifiedDistricts, setBeautifiedDistricts] = useState([]);
   const [beautifiedMunicipality, setBeautifiedMunicipality] = useState([]);
   const [beautifiedWard, setBeautifiedWard] = useState([]);
+  const [loading, setLoading] = useState(false)
+
+  const { toggleLoginModalTrue } = useStore();
+  const router = useRouter();
 
   const beautifiedProvinces = Locations.map((items: any) => {
-    return { id: items.id, label: items.name };
+    return { id: items.name, label: items.name };
   });
 
   useEffect(() => {
     Locations.filter((items: any) => {
-      if (items.id === formData.province)
+      if (items.name === formData.province)
         setBeautifiedDistricts(
           items.districts.map((item: any) => {
             return {
-              id: item.id,
+              id: item.name,
               label: item.name,
               municipality: item.municipalities,
             };
@@ -53,7 +66,7 @@ const DeliveryAddressForm = ({ Locations }: any) => {
       if (district.id === formData.district)
         setBeautifiedMunicipality(
           district.municipality.map((muni: any) => {
-            return { id: muni.id, label: muni.name, ward: muni.wards };
+            return { id: muni.name, label: muni.name, ward: muni.wards };
           })
         );
     });
@@ -64,11 +77,82 @@ const DeliveryAddressForm = ({ Locations }: any) => {
       if (muni.id === formData.municipality)
         setBeautifiedWard(
           muni.ward.map((ward: any) => {
-            return { id: ward, label: ward };
+            return { id: ward.toString(), label: ward };
           })
         );
     });
   }, [formData.municipality]);
+
+  const itemsToOrder = cartItems.map((items: any) => {
+    return {
+      price: items.shoe.price,
+      size: items.size,
+      shoe_id: items.shoe.id,
+      color_variation_id: items.colorVariation.id,
+      count: items.count
+    }
+  })
+  const beautifyPayload = (data: Record<string, string>) => {
+    const payload = {
+      firstName: "",
+      lastName: "",
+      province: "",
+      district: "",
+      municipality: "",
+      ward: "",
+      phone: "",
+      total_amount: "",
+      items_total_price: "",
+      tax_amount: "",
+      delivery_charge: "",
+      orderItems: [],
+    };
+    payload.firstName = data.firstName;
+    payload.lastName = data.lastName;
+    payload.province = data.province;
+    payload.district = data.district;
+    payload.municipality = data.municipality;
+    payload.ward = data.ward;
+    payload.phone = data.phone;
+    payload.total_amount = totalPrice;
+    payload.items_total_price = itemsPrice;
+    payload.tax_amount = tax;
+    payload.delivery_charge = deliveryCharge;
+    payload.orderItems = itemsToOrder;
+    return payload;
+  };
+
+  const handleCartSubmit = async () => {
+    setLoading(true);
+    try {
+      const beautifiedPayload = beautifyPayload(formData);
+      const { isValid, error } = AddOrderValidation(beautifiedPayload);
+      if (isValid) {
+        const res = await JsonPost(CRUD_ORDER, beautifiedPayload, token);
+        const { status, statusCode, data }: any = res;
+        if (status) {
+          toast.success("Added to cart successfully");
+          clearCachesByServerAction('/cart')
+          setFormError(defaultError);
+          setLoading(false);
+          setFormData(defaultForm)
+          router.push('/payment/' + data.id);
+        } else if (statusCode === 401) {
+          toggleLoginModalTrue();
+          setLoading(false);
+        } else {
+          setLoading(false);
+          toast.error("Error while adding to cart");
+        }
+      } else {
+        setLoading(false);
+        toast.error("Validation Error");
+        setFormError(error);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div className="mt-8">
@@ -106,7 +190,7 @@ const DeliveryAddressForm = ({ Locations }: any) => {
             }
             data={beautifiedProvinces}
             required
-            error={formError.address}
+            error={formError.province}
             placeholder="Select a Province"
             className="col-span-1"
           />
@@ -118,7 +202,7 @@ const DeliveryAddressForm = ({ Locations }: any) => {
             }
             required
             data={beautifiedDistricts}
-            error={formError.address}
+            error={formError.district}
             placeholder={`${
               formData.province?.length > 0
                 ? "Select a district"
@@ -134,7 +218,7 @@ const DeliveryAddressForm = ({ Locations }: any) => {
             }
             data={beautifiedMunicipality}
             required
-            error={formError.address}
+            error={formError.municipality}
             placeholder={`${
               formData.district?.length > 0
                 ? "Select a district"
@@ -146,9 +230,7 @@ const DeliveryAddressForm = ({ Locations }: any) => {
             title="Ward No."
             value={formData.ward}
             onChange={(val: string) => updateState("ward", val, setFormData)}
-            required
             data={beautifiedWard}
-            error={formError.address}
             placeholder={`${
               formData.municipality?.length > 0
                 ? "Select a Municipality"
@@ -176,6 +258,8 @@ const DeliveryAddressForm = ({ Locations }: any) => {
         iconHeight={40}
         iconWidth={30}
         className="mt-8"
+        disabled={loading}
+        onClick={handleCartSubmit}
       />
     </div>
   );
