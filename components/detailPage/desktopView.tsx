@@ -34,7 +34,7 @@ const DesktopView = ({
   shoeDetails,
   token,
 }: DesktopViewProps) => {
-  const [colorVariation, setColorVariation] = useState<Record<string, any>>({colorVariationId: images[1]?.id, images: images[1].images});
+  const [colorVariation, setColorVariation] = useState<Record<string, any>>({id: images[1]?.id, images: images[1].images});
   const [colorSizesAvailable, setColorSizesAvailable] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     size: "",
@@ -224,7 +224,7 @@ console.log(colorVariation)
                         className="shoe-image-list cursor-pointer"
                         style={{
                           borderBottom:
-                            img?.id === colorVariation.colorVariationId
+                            img?.id === colorVariation?.id
                               ? "3px solid black"
                               : "3px solid transparent",
                           transition: "all 0.4s ease",
