@@ -34,13 +34,13 @@ const DesktopView = ({
   shoeDetails,
   token,
 }: DesktopViewProps) => {
-  const [imageUrl, setImageUrl] = useState(images[1]?.image_url);
+  const [colorVariation, setColorVariation] = useState<Record<string, any>>({colorVariationId: images[1]?.id, images: images[1].images});
   const [colorSizesAvailable, setColorSizesAvailable] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     size: "",
     color_variation: images[1],
   });
-  // console.log("images", images);
+  console.log("images", images);
   const [formError, setFormError] = useState(defaultError);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -63,7 +63,7 @@ const DesktopView = ({
   }, [formData.color_variation, colorSizesAvailable, formData.size]);
 
   const handleColorClick = (colorDetail: Record<string, any>) => {
-    setImageUrl(colorDetail?.image_url);
+    setColorVariation(colorDetail);
     updateState("color_variation", colorDetail, setFormData);
     const temp: string[] = [];
     colorDetail.sizes.forEach((size: Record<string, any>) => {
@@ -143,7 +143,7 @@ const DesktopView = ({
       console.error(e);
     }
   };
-
+console.log(colorVariation)
   // useEffect(() => {
   //   const handleScroll = (event: any) => {
   //     console.log(sidebarMargin, "first", window.scrollY);
@@ -164,10 +164,14 @@ const DesktopView = ({
   return (
     <div className="media-960:flex hidden">
       <div className="flex flex-1 flex-col">
-        <div className="flex justify-center">
-          <span className="relative w-3/4 aspect-square">
-            <Image src={IMAGE_URL + imageUrl} fill alt="image" quality={100} />
-          </span>
+        <div className="grid grid-cols-2 gap-1">
+          {colorVariation?.images?.map((img: string) => {
+            return (
+              <span className="relative col-span-1 aspect-square">
+                <Image src={IMAGE_URL + img} fill alt="image" quality={100} />
+              </span>
+            );
+          })}
         </div>
         <div className="media-960:px-5 xl:px-8 media-1440:px-10 2xl:px-16 max-w-[970px] w-full m-auto mt-20">
           <div className="first:border-t-2 border-b-2">
@@ -220,7 +224,7 @@ const DesktopView = ({
                         className="shoe-image-list cursor-pointer"
                         style={{
                           borderBottom:
-                            img?.image_url === imageUrl
+                            img?.id === colorVariation.colorVariationId
                               ? "3px solid black"
                               : "3px solid transparent",
                           transition: "all 0.4s ease",
