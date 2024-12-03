@@ -34,7 +34,11 @@ const DesktopView = ({
   shoeDetails,
   token,
 }: DesktopViewProps) => {
-  const [colorVariation, setColorVariation] = useState<Record<string, any>>({id: images[1]?.id, images: images[1].images});
+  const [colorVariation, setColorVariation] = useState<Record<string, any>>({
+    id: images[1]?.id,
+    colorVariationImages: images[1].colorVariationImages
+    ,
+  });
   const [colorSizesAvailable, setColorSizesAvailable] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     size: "",
@@ -143,7 +147,7 @@ const DesktopView = ({
       console.error(e);
     }
   };
-console.log(colorVariation)
+  console.log(colorVariation);
   // useEffect(() => {
   //   const handleScroll = (event: any) => {
   //     console.log(sidebarMargin, "first", window.scrollY);
@@ -165,10 +169,15 @@ console.log(colorVariation)
     <div className="media-960:flex hidden">
       <div className="flex flex-1 flex-col">
         <div className="grid grid-cols-2 gap-1">
-          {colorVariation?.images?.map((img: string) => {
+          {colorVariation?.colorVariationImages?.map((img: any) => {
             return (
               <span className="relative col-span-1 aspect-square">
-                <Image src={IMAGE_URL + img} fill alt="image" quality={100} />
+                <Image
+                  src={IMAGE_URL + img.image_url}
+                  fill
+                  alt="image"
+                  quality={100}
+                />
               </span>
             );
           })}

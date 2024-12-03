@@ -6,6 +6,9 @@ const nextConfig = {
           {
             hostname: "localhost",
           },
+          {
+            hostname: "abibas-backend-1.vercel.app",
+          },
         ],
       },
 };
