@@ -1,6 +1,6 @@
 import React from "react";
 import CartProductCard from "../../../components/cartProductCard";
-import { Button, ButtonWithShadow } from "@/subcomponents/button";
+import { ButtonWithShadow } from "@/subcomponents/button";
 import RightArrowIcon from "../../../public/icon/right-arrow-white.svg";
 import Link from "next/link";
 import { ServerSideGet } from "@/utilities/apiCalls";
@@ -43,7 +43,6 @@ const CartPage = async () => {
     0
   );
 
-  console.log(cartItems);
   return (
     <div className="px-4 media-960:flex-row flex flex-col gap-10 max-w-[1280px] m-auto">
       {/* list of items */}

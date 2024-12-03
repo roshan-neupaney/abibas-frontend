@@ -59,7 +59,7 @@ const DeliveryAddressForm = ({ Locations, cartItems, tax, totalPrice, token, del
           })
         );
     });
-  }, [formData.province]);
+  }, [formData.province, Locations]);
 
   useEffect(() => {
     beautifiedDistricts.filter((district: any) => {
@@ -70,7 +70,7 @@ const DeliveryAddressForm = ({ Locations, cartItems, tax, totalPrice, token, del
           })
         );
     });
-  }, [formData.district]);
+  }, [formData.district, beautifiedDistricts]);
 
   useEffect(() => {
     beautifiedMunicipality.filter((muni: any) => {
@@ -81,7 +81,7 @@ const DeliveryAddressForm = ({ Locations, cartItems, tax, totalPrice, token, del
           })
         );
     });
-  }, [formData.municipality]);
+  }, [formData.municipality, beautifiedMunicipality]);
 
   const itemsToOrder = cartItems.map((items: any) => {
     return {

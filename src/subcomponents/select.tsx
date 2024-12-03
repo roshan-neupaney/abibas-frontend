@@ -84,7 +84,6 @@ const CustomSelect = ({
       if (typeof value === "string") {
         data?.forEach((element) => {
           if (element?.id === value ) {
-            console.log(element.id)
             setSelectedValue(element?.label);
           }
         });

@@ -3,7 +3,6 @@ import Detail from "./detail";
 import { ServerSideGetWithId } from "@/utilities/apiCalls";
 import { cookies } from "next/headers";
 import { CRUD_SHOE } from "../../../../../config/endpoints";
-import { authorization } from "../../../../../hoc/auth";
 
 interface detailPageProps {
   params: { slug: string };

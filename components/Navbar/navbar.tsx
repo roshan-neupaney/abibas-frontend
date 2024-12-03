@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import BurgerIcon from "../../public/icon/burger-menu.svg";
 import FavoriteIcon from "../../public/icon/favorite.svg";
 import AdidasIcon from "../../public/icon/adidas.png";

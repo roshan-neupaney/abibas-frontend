@@ -23,15 +23,7 @@ const Esewa = ({
   const key: string = process.env.SECRET_KEY || "";
 
   const message = `total_amount=${total_amount},transaction_uuid=${uuid},product_code=${product_code}`;
-  var hash = crypto.createHmac("sha256", key).update(message).digest("base64");
-  console.log(product_code, "hash", hash);
-  console.log(
-    total_amount,
-    "tax_amount",
-    tax_amount,
-    "skdf",
-    items_total_price
-  );
+  const hash = crypto.createHmac("sha256", key).update(message).digest("base64");
   return (
     <div>
       <form

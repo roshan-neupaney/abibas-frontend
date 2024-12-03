@@ -1,3 +1,4 @@
+'use client'
 import Image from "next/image";
 import crossIcon from "../../public/icon/cross.svg";
 import CustomInput from "@/subcomponents/input";
@@ -87,7 +88,7 @@ const LoginModal = ({ open, handleClose, setCookies }: LoginModalProps) => {
                   updateState("email", val, setFormData)
                 }
                 placeholder="Email Address*"
-                // error={formError.email}
+                error={formError.email}
               />
               <CustomInput
                 title="Password"
@@ -97,7 +98,7 @@ const LoginModal = ({ open, handleClose, setCookies }: LoginModalProps) => {
                 }
                 placeholder="Password*"
                 type="password"
-                // error={formError.password}
+                error={formError.password}
               />
               <div className="">
                 <ButtonWithShadow

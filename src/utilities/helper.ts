@@ -27,6 +27,8 @@ export const updateState = (
     try {
       const jwt = Buffer.from(token.split(".")[1], "base64").toString();
       return JSON.parse(jwt);
-    } catch (e) {}
+    } catch (e) {
+      console.error(e)
+    }
     return {};
   }

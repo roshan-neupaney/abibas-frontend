@@ -44,7 +44,6 @@ const DesktopView = ({
     size: "",
     color_variation: images[1],
   });
-  console.log("images", images);
   const [formError, setFormError] = useState(defaultError);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -72,7 +71,6 @@ const DesktopView = ({
     const temp: string[] = [];
     colorDetail.sizes.forEach((size: Record<string, any>) => {
       if (!(size?.stock === "0")) {
-        console.log(size.stock);
         temp.push(size?.size);
         setColorSizesAvailable(temp);
       }
@@ -147,31 +145,14 @@ const DesktopView = ({
       console.error(e);
     }
   };
-  console.log(colorVariation);
-  // useEffect(() => {
-  //   const handleScroll = (event: any) => {
-  //     console.log(sidebarMargin, "first", window.scrollY);
-  //     if (window.scrollY < 125) {
-  //       setSidebarMargin(window.scrollY);
-  //     } else {
-  //       setSidebarMargin(window.scrollY - 125);
-  //     }
-  //   };
 
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
-  // console.log(sidebarMargin);
   return (
     <div className="media-960:flex hidden">
       <div className="flex flex-1 flex-col">
         <div className="grid grid-cols-2 gap-1">
           {colorVariation?.colorVariationImages?.map((img: any) => {
             return (
-              <span className="relative col-span-1 aspect-square">
+              <span className="relative col-span-1 aspect-square" key={img.image_url}>
                 <Image
                   src={IMAGE_URL + img.image_url}
                   fill

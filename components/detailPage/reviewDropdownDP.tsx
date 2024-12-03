@@ -55,7 +55,6 @@ const ReviewDropdownDesktop = ({
           token
         );
         const { status, statusCode }: any = res;
-        console.log(status);
         if (status) {
           toast.success("Review submitted successfully");
           setFormError(defaultError);
