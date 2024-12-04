@@ -9,6 +9,9 @@ const nextConfig = {
           {
             hostname: "abibas-backend-1.vercel.app",
           },
+          {
+            hostname: "res.cloudinary.com",
+          },
         ],
       },
 };
