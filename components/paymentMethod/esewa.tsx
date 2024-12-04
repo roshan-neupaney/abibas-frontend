@@ -83,14 +83,14 @@ const Esewa = ({
           type="hidden"
           id="success_url"
           name="success_url"
-          value={`http://localhost:3000/payment/success/${id}`}
+          value={`https://abibas-frontend.vercel.app/payment/success/${id}`}
           required
         />
         <input
           type="hidden"
           id="failure_url"
           name="failure_url"
-          value={`http://localhost:3000/payment/${id}`}
+          value={`https://abibas-frontend.vercel.app/payment/${id}`}
           required
         />
         <input
