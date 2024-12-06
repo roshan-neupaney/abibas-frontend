@@ -9,7 +9,7 @@ interface DetailProps {
 }
 
 const Detail = ({ shoeDetails={}, token='' }: DetailProps) => {
-
+console.log(shoeDetails)
   //listing all images of colorVariation
   const images =
     shoeDetails?.colorVariation?.map((items: any) => {
