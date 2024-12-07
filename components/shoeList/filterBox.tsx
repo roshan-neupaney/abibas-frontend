@@ -103,15 +103,15 @@ const FilterBox = () => {
             <div>
               <div className="uppercase max-h-[70px] min-h-[50px] content-center border-b p-4 flex gap-2">
                 <CustomToggleSwitch value={false} onChange={() => router.replace('?')} />
-                <span>Men's</span>
+                <span>Men&apos;s</span>
               </div>
               <div className="uppercase max-h-[70px] min-h-[50px] content-center border-b p-4 flex gap-2">
                 <CustomToggleSwitch value={false} onChange={() => {}} />
-                <span>Women's</span>
+                <span>Women&apos;s</span>
               </div>
               <div className="uppercase max-h-[70px] min-h-[50px] content-center border-b p-4 flex gap-2">
                 <CustomToggleSwitch value={false} onChange={() => {}} />
-                <span>Kid's</span>
+                <span>Kid&apos;s</span>
               </div>
               <div className="uppercase max-h-[70px] min-h-[50px] content-center border-b p-4 flex gap-2">
                 <CustomToggleSwitch value={false} onChange={() => {}} />
