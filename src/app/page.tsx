@@ -188,7 +188,7 @@ const MainPage = async () => {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-[10px] media-600:hidden overflow-x-scroll slider-container">
-            {recommendedData.slice(0, 6)?.map((items, index) => {
+            {recommendedData?.slice(0, 6)?.map((items, index) => {
               return (
                 <div className="col-span-1" key={index}>
                   <ProductCard image={items.image} className="w-full" />
@@ -206,8 +206,8 @@ const MainPage = async () => {
           </div>
           <ProductSlider className="hidden media-600:flex gap-[10px] recommendedSlider">
             {shoes.data
-              .slice(0, 10)
-              .map((items: Record<string, any>, index: number) => {
+              ?.slice(0, 10)
+              ?.map((items: Record<string, any>, index: number) => {
                 return (
                   <div key={index}>
                     <ProductCard
@@ -225,7 +225,7 @@ const MainPage = async () => {
       </div>
       <div className="flex mt-20 pl-4 media-390:pl-8 md:pl-16 media-960:px-16 media-1440:px-28">
         <ProductSlider className="gap-[10px]">
-          {featuredData.map((items, index) => {
+          {featuredData?.map((items, index) => {
             return (
               <React.Fragment key={index}>
                 <VideoImageCard
