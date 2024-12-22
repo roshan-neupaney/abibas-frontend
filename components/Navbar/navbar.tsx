@@ -20,7 +20,7 @@ interface NavbarProps {
 const Navbar = ({setCookies}: NavbarProps) => {
   const { status, toggleLoginModalTrue , toggleLoginModalFalse} = useStore();
   return (
-    <div className="navbar-wrapper bg-inherit">
+    <div className="navbar-wrapper bg-inherit sticky top-0 w-full z-10">
       <div className="notification-banner flex p-2 justify-center bg-[#000000] font-adihaus text-[11px] items-center h-11 font-bold">
         <span className="uppercase text-secondary">
           adiclub days: 9/25 - 10/2

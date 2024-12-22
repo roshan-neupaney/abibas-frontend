@@ -9,11 +9,18 @@ import VideoImageCard from "../../components/videoImageCard";
 import { cookies } from "next/headers";
 import { ServerSideGet } from "@/utilities/apiCalls";
 import { CRUD_SHOE } from "../../config/endpoints";
+import Link from "next/link";
+import { authorization } from "../../hoc/auth";
 
 async function getData(token: string | undefined) {
-  const response = [await ServerSideGet(token, CRUD_SHOE)];
-  const [shoes] = response;
-  return { shoes };
+  // authorization(token);
+  try {
+    const response = [await ServerSideGet(token, CRUD_SHOE)];
+    const [shoes] = response;
+    return { shoes };
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 const MainPage = async () => {
@@ -84,7 +91,7 @@ const MainPage = async () => {
       description: "Gift all the feels this season with soft and cozy fleece.",
     },
   ];
-
+  console.log(shoes.data);
   return (
     <div>
       <div className="flex relative">
@@ -123,24 +130,30 @@ const MainPage = async () => {
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button
-              title="Shop men"
-              className="px-3 bg-white uppercase"
-              style={{ backgroundColor: "#ffffff" }}
-              sideIcon={NextIconBlack}
-            />
-            <Button
-              title="shop women"
-              className="px-3 bg-white uppercase"
-              style={{ backgroundColor: "#ffffff" }}
-              sideIcon={NextIconBlack}
-            />
-            <Button
-              title="shop kids"
-              className="px-3 bg-white uppercase"
-              style={{ backgroundColor: "#ffffff" }}
-              sideIcon={NextIconBlack}
-            />
+            <Link href={"/Men's"}>
+              <Button
+                title="Shop men"
+                className="px-3 bg-white uppercase"
+                style={{ backgroundColor: "#ffffff" }}
+                sideIcon={NextIconBlack}
+              />
+            </Link>
+            <Link href={"/Women's"}>
+              <Button
+                title="shop women"
+                className="px-3 bg-white uppercase"
+                style={{ backgroundColor: "#ffffff" }}
+                sideIcon={NextIconBlack}
+              />
+            </Link>
+            <Link href={"/Kid's"}>
+              <Button
+                title="shop kids"
+                className="px-3 bg-white uppercase"
+                style={{ backgroundColor: "#ffffff" }}
+                sideIcon={NextIconBlack}
+              />
+            </Link>
           </div>
         </div>
       </div>
@@ -158,11 +171,13 @@ const MainPage = async () => {
                 <div key={index}>
                   <ProductCard
                     title={items?.title}
+                    price={items.price}
                     category={items?.category.title}
                     image={items?.colorVariation[0].image_url}
                     className="md:w-[316px] xl:w-[380px]"
                     id={items.slug_url}
                     routing_url={"/shoes/detail/"}
+                    token={token}
                   />
                 </div>
               );
@@ -188,13 +203,20 @@ const MainPage = async () => {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-[10px] media-600:hidden overflow-x-scroll slider-container">
-            {recommendedData?.slice(0, 6)?.map((items, index) => {
-              return (
-                <div className="col-span-1" key={index}>
-                  <ProductCard image={items.image} className="w-full" />
-                </div>
-              );
-            })}
+            {shoes?.data
+              ?.slice(0, 6)
+              ?.map((items: Record<string, any>, index: number) => {
+                return (
+                  <div className="col-span-1" key={index}>
+                    <ProductCard
+                      image={items?.colorVariation[0]?.image_url}
+                      price={items.price}
+                      className="w-full"
+                      token={token}
+                    />
+                  </div>
+                );
+              })}
             <div className="col-span-2">
               <Button
                 title="View All"
@@ -214,8 +236,10 @@ const MainPage = async () => {
                       title={items?.title}
                       category={items?.category?.title}
                       image={items?.colorVariation[0]?.image_url}
+                      price={items.price}
                       className="w-full mb-8 media-600:w-40 md:w-80 lg:w-52 media-1366:w-72"
                       id={`snap_list_${index}`}
+                      token={token}
                     />
                   </div>
                 );

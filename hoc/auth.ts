@@ -1,9 +1,9 @@
-'use client'
+"use client";
 import { DecodeJWT } from "../src/utilities/helper";
 import useStore from "../zustand/store";
 
 export const authorization = (value: string | undefined) => {
-  const {toggleLoginModalTrue } = useStore();
+  const { toggleLoginModalTrue } = useStore();
   if (!value) {
     toggleLoginModalTrue();
   } else {

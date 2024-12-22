@@ -16,6 +16,7 @@ const config: Config = {
 			'media-960' : '960px',
 			'media-1366' : '1366px',
 			'media-1440' : '1440px',
+			'media-1600' : '1600px',
 			'media-1920' : '1920px',
 		},
 		fontFamily: {

@@ -131,8 +131,8 @@ const DeliveryAddressForm = ({ Locations, cartItems, tax, totalPrice, token, del
         const res = await JsonPost(CRUD_ORDER, beautifiedPayload, token);
         const { status, statusCode, data }: any = res;
         if (status) {
-          toast.success("Added to cart successfully");
-          clearCachesByServerAction('/cart')
+          toast.success("Order placed successfully");
+          clearCachesByServerAction('/checkout')
           setFormError(defaultError);
           setLoading(false);
           setFormData(defaultForm)
@@ -142,7 +142,7 @@ const DeliveryAddressForm = ({ Locations, cartItems, tax, totalPrice, token, del
           setLoading(false);
         } else {
           setLoading(false);
-          toast.error("Error while adding to cart");
+          toast.error("Error while placing an order");
         }
       } else {
         setLoading(false);

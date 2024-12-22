@@ -38,6 +38,25 @@ export const ServerSideGet = async (token: string | undefined, url: string) => {
     }
     return response;
   };
+export const ServerSideGetWithParams = async (token: string | undefined, url: string, params: string) => {
+    const response = {
+      status: false,
+      data: {}
+    };
+  
+    try {
+      const URL = url+ '?' + params;
+      const res = await SERVER_SIDE_GET(URL, token);
+      console.log(res)
+      if (res?.status === 200) {
+        response.status = true;
+        response.data = res.data;
+      }
+    } catch (error) {
+      console.error('Error while fetching', error);
+    }
+    return response;
+  };
 
   export const ServerSideGetWithId = async (token: string | undefined, url: string, id: string) => {
     try {
