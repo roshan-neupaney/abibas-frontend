@@ -10,10 +10,8 @@ import { cookies } from "next/headers";
 import { ServerSideGet } from "@/utilities/apiCalls";
 import { CRUD_SHOE } from "../../config/endpoints";
 import Link from "next/link";
-import { authorization } from "../../hoc/auth";
 
 async function getData(token: string | undefined) {
-  // authorization(token);
   try {
     const response = [await ServerSideGet(token, CRUD_SHOE)];
     const [shoes] = response;
@@ -26,48 +24,6 @@ async function getData(token: string | undefined) {
 const MainPage = async () => {
   const token = cookies().get("access_token")?.value;
   const { shoes }: any = await getData(token);
-  const recommendedData = [
-    { title: "Gazelle Bold Shoes", image: "/images/1.avif", category: "Men's" },
-    { title: "Gazelle Bold Shoes", image: "/images/2.avif", category: "Men's" },
-    { title: "Japan Shoes", image: "/images/3.avif", category: "Men's" },
-    {
-      title: "Gazelle Indoor Shoes",
-      image: "/images/4.avif",
-      category: "Men's",
-    },
-    { title: "Gazelle Bold Shoes", image: "/images/5.avif", category: "Men's" },
-    {
-      title: "Gazelle Indoor Shoes",
-      image: "/images/6.avif",
-      category: "Men's",
-    },
-    {
-      title: "Anthony Edwards 1 Mid Basketball Shoes",
-      image: "/images/3.avif",
-      category: "Men's",
-    },
-    {
-      title: "Anthony Edwards 1 Mid Basketball Shoes",
-      image: "/images/6.avif",
-      category: "Men's",
-    },
-    {
-      title: "Anthony Edwards 1 Mid Basketball Shoes",
-      image: "/images/1.avif",
-      category: "Men's",
-    },
-    {
-      title: "Anthony Edwards 1 Mid Basketball Shoes",
-      image: "/images/3.avif",
-      category: "Men's",
-    },
-    {
-      title: "Anthony Edwards 1 Mid Basketball Shoes",
-      image: "/images/6.avif",
-      category: "Men's",
-    },
-  ];
-
   const featuredData = [
     {
       title: "HOLIDAY '24",

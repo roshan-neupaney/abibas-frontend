@@ -9,7 +9,6 @@ import {
   CRUD_SHOE,
 } from "../../../config/endpoints";
 import ProductCard from "../../../components/productCard";
-import { FormatDate } from "@/utilities/helper";
 
 async function getData(
   token: string | undefined,
@@ -18,7 +17,6 @@ async function getData(
 ) {
   const { colors, brands, sortBy } = searchParams;
   const categories = slug === "search" ? "" : slug;
-  console.log(categories);
   try {
     const res = [
       await ServerSideGet(token, CRUD_CATEGORY),
@@ -60,7 +58,6 @@ const ShoePage = async ({ params, searchParams }: ShoePageProps) => {
     slug,
     searchParams
   );
-  console.log(shoe_list);
   return (
     <div className="p-4 m-auto media-960:max-w-[1280px]">
       {/* title header */}

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import HollowFavIcon from "../public/icon/favorite.svg";
 import FilledFavIcon from "../public/icon/favorite-filled.svg";
 import Link from "next/link";
