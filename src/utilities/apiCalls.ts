@@ -83,7 +83,7 @@ export const ServerSideGetWithParams = async (token: string | undefined, url: st
   export const JsonPost = async (url:string, payload: Record<string, any>, token: string) => {
     try {
       const response = {
-        data: "",
+        data: {},
         status: false,
         statusCode: ''
       };

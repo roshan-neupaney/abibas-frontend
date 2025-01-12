@@ -1,15 +1,35 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import MobileView from "../../../../../components/detailPage/mobileView";
 import DesktopView from "../../../../../components/detailPage/desktopView";
+import { CRUD_INTERACTION } from "../../../../../config/endpoints";
+import { JsonPost } from "@/utilities/apiCalls";
 
 interface DetailProps {
   shoeDetails: Record<string, any>;
   token: string | undefined;
+  slug: string;
 }
 
-const Detail = ({ shoeDetails={}, token='' }: DetailProps) => {
+const Detail = ({ shoeDetails={}, token='', slug }: DetailProps) => {
 console.log(shoeDetails)
+const logView = async() => {
+  await JsonPost(CRUD_INTERACTION, {
+    shoe_id: shoeDetails?.id,
+    action_type: 'view',
+    interaction_score: 2
+  }, token || '')
+}
+
+  useEffect(() => {
+    const viewedKey = slug;
+    if (!sessionStorage.getItem(viewedKey)) {
+      sessionStorage.setItem(viewedKey, 'true');
+      logView();
+    }
+  }, [shoeDetails?.id])
+
+
   //listing all images of colorVariation
   const images =
     shoeDetails?.colorVariation?.map((items: any) => {

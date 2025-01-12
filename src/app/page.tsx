@@ -131,7 +131,8 @@ const MainPage = async () => {
                     category={items?.category.title}
                     image={items?.colorVariation[0].image_url}
                     className="md:w-[316px] xl:w-[380px]"
-                    id={items.slug_url}
+                    id={items?.id}
+                    slug_url={items.slug_url}
                     routing_url={"/shoes/detail/"}
                     token={token}
                   />

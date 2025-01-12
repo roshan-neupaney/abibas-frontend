@@ -11,7 +11,7 @@ interface detailPageProps {
 async function getData(slug_url: string, token: string | undefined) {
   try {
     const res = [await ServerSideGetWithId(token, CRUD_SHOE, slug_url)];
-    const [shoe_details] = res;
+    const [shoe_details]:any = res;
     return { shoe_details };
   } catch (error: any) {
     console.log(error)
@@ -24,7 +24,7 @@ const DetailPage = async ({ params }: detailPageProps) => {
   const { shoe_details }: any = await getData(slug, token);
   return (
     <div className="">
-      <Detail shoeDetails={shoe_details?.data} token={token} />
+      <Detail shoeDetails={shoe_details?.data} token={token} slug={slug} />
     </div>
   );
 };
