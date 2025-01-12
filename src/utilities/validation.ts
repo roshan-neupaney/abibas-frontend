@@ -23,7 +23,47 @@ export const loginValidation = (payload: Record<string, any>) => {
     const errorMessage = {
       email: "",
       password: "",
+      firstName: "",
+      lastName: "",
+      mobile: "",
     };
+    if (email.length <= 0) {
+      errorMessage.email = "Email is required.";
+      count++;
+    }
+    if (password.length <= 0) {
+      errorMessage.password = "Password is required.";
+      count++;
+    }
+    return { error: errorMessage, isValid: count === 0 };
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const signupValidation = (payload: Record<string, string>) => {
+  try {
+    const { email, password, firstName, lastName, mobile } = payload;
+    let count = 0;
+    const errorMessage = {
+      firstName: "",
+      lastName: "",
+      mobile: "",
+      email: "",
+      password: "",
+    };
+    if (firstName.length <= 0) {
+      errorMessage.firstName = "Firstname is required.";
+      count++;
+    }
+    if (lastName.length <= 0) {
+      errorMessage.lastName = "Lastname is required.";
+      count++;
+    }
+    if (mobile.length <= 0) {
+      errorMessage.mobile = "Mobile is required.";
+      count++;
+    }
     if (email.length <= 0) {
       errorMessage.email = "Email is required.";
       count++;

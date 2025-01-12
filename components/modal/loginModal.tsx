@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Image from "next/image";
 import crossIcon from "../../public/icon/cross.svg";
 import CustomInput from "@/subcomponents/input";
@@ -9,46 +9,89 @@ import RightArrow from "../../public/icon/right-arrow-white.svg";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Login_Post } from "@/utilities/apiCalls";
-import { loginValidation } from "@/utilities/validation";
-import { LOGIN } from "../../config/endpoints";
-// import { Login_Post } from "@/utilities/apiCalls";
-// import { useRouter } from "next/navigation";
-// import toast from "react-hot-toast";
-// import { LOGIN } from "../../config/endpoints";
-// import { loginValidation } from "@/utilities/validation";
+import { loginValidation, signupValidation } from "@/utilities/validation";
+import { LOGIN, SIGNUP } from "../../config/endpoints";
 
 interface LoginModalProps {
   open: boolean;
   handleClose: any;
-  setCookies: (val: string) => void
+  setCookies: (val: string) => void;
 }
 
 const defaultForm = {
   email: "",
   password: "",
+  firstName: "",
+  lastName: "",
+  mobile: "",
 };
 
 const defaultError = {
   email: "",
   password: "",
+  firstName: "",
+  lastName: "",
+  mobile: "",
 };
 
 const LoginModal = ({ open, handleClose, setCookies }: LoginModalProps) => {
   const [formData, setFormData] = useState(defaultForm);
   const [formError, setFormError] = useState(defaultError);
+  const [isLogin, setIsLogin] = useState(false);
 
   const router = useRouter();
+
+  const beautifyLoginPayload = () => {
+    const payload = {
+      email: "",
+      password: "",
+    };
+    payload.email = formData.email;
+    payload.password = formData.password;
+    return payload;
+  };
+  const beautifySignupPayload = () => {
+    const payload = {
+      email: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      mobile: "",
+      role: "USER",
+    };
+    payload.email = formData.email;
+    payload.password = formData.password;
+    payload.firstName = formData.firstName;
+    payload.lastName = formData.lastName;
+    payload.mobile = formData.mobile;
+    return payload;
+  };
   const handleSubmit = async () => {
     try {
-      const { isValid, error }: any = loginValidation(formData);
+      const beautifiedPayload = isLogin
+        ? beautifyLoginPayload()
+        : beautifySignupPayload();
+      const { isValid, error }: any = isLogin
+        ? loginValidation(beautifiedPayload)
+        : signupValidation(beautifiedPayload);
       if (isValid) {
-        const response = await Login_Post(LOGIN, formData);
+        const response = isLogin
+          ? await Login_Post(LOGIN, beautifiedPayload)
+          : await Login_Post(SIGNUP, beautifiedPayload);
         const { status, data }: any = response;
+        console.log(status);
         if (status) {
-          setCookies(data?.access_token);
-          toast.success("Login Successful");
-          handleClose();
-          router.refresh();
+          if (isLogin) {
+            setCookies(data?.access_token);
+            toast.success("Login Successful");
+            handleClose();
+            router.refresh();
+          } else {
+            setIsLogin(true);
+            toast.success("Sign up Successful");
+            setFormData(defaultForm);
+            setFormError(defaultError);
+          }
         } else {
           toast.error(data.message);
         }
@@ -72,43 +115,127 @@ const LoginModal = ({ open, handleClose, setCookies }: LoginModalProps) => {
             >
               <Image src={crossIcon} height={30} width={30} alt="" />
             </div>
+
             <div className="flex py-3 px-5 gap-4 items-center self-stretch border-b border-solid border-[#D8DADB]">
               <div
                 className="flex flex-1 text-3xl uppercase"
                 style={{ fontFamily: "var(--font-adineue)" }}
               >
-                Login
+                {isLogin ? "Login" : "Sign Up"}
               </div>
             </div>
-            <div className="flex flex-col py-4 px-5 gap-4">
-              <CustomInput
-                title="Email"
-                value={formData.email}
-                onChange={(val: string) =>
-                  updateState("email", val, setFormData)
-                }
-                placeholder="Email Address*"
-                error={formError.email}
-              />
-              <CustomInput
-                title="Password"
-                value={formData.password}
-                onChange={(val: string) =>
-                  updateState("password", val, setFormData)
-                }
-                placeholder="Password*"
-                type="password"
-                error={formError.password}
-              />
-              <div className="">
-                <ButtonWithShadow
-                  title="Continue"
-                  onClick={handleSubmit}
-                  sideIcon={RightArrow}
-                  className=""
+            {isLogin ? (
+              <div className="flex flex-col py-4 px-5 gap-4">
+                <CustomInput
+                  title="Email"
+                  value={formData.email}
+                  onChange={(val: string) =>
+                    updateState("email", val, setFormData)
+                  }
+                  placeholder="Email Address*"
+                  error={formError.email}
                 />
+                <CustomInput
+                  title="Password"
+                  value={formData.password}
+                  onChange={(val: string) =>
+                    updateState("password", val, setFormData)
+                  }
+                  placeholder="Password*"
+                  type="password"
+                  error={formError.password}
+                />
+                <div className="flex gap-4 items-end">
+                  <div className="">
+                    <ButtonWithShadow
+                      title="Continue"
+                      onClick={handleSubmit}
+                      sideIcon={RightArrow}
+                      className=""
+                    />
+                  </div>
+                  <span
+                    className="uppercase underline cursor-pointer"
+                    onClick={() => {
+                      setIsLogin(false);
+                      setFormData(defaultForm);
+                      setFormError(defaultError);
+                    }}
+                  >
+                    Sign Up
+                  </span>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="flex flex-col py-4 px-5 gap-4">
+                <CustomInput
+                  title="Firstname"
+                  value={formData.firstName}
+                  onChange={(val: string) =>
+                    updateState("firstName", val, setFormData)
+                  }
+                  placeholder="Firstname*"
+                  error={formError.firstName}
+                />
+                <CustomInput
+                  title="Lastname"
+                  value={formData.lastName}
+                  onChange={(val: string) =>
+                    updateState("lastName", val, setFormData)
+                  }
+                  placeholder="Lastname*"
+                  error={formError.lastName}
+                />
+                <CustomInput
+                  title="Email"
+                  value={formData.email}
+                  onChange={(val: string) =>
+                    updateState("email", val, setFormData)
+                  }
+                  placeholder="Email Address*"
+                  error={formError.email}
+                />
+                <CustomInput
+                  title="Password"
+                  value={formData.password}
+                  onChange={(val: string) =>
+                    updateState("password", val, setFormData)
+                  }
+                  placeholder="Password*"
+                  type="password"
+                  error={formError.password}
+                />
+                <CustomInput
+                  title="Mobile"
+                  value={formData.mobile}
+                  onChange={(val: string) =>
+                    updateState("mobile", val, setFormData)
+                  }
+                  placeholder="Mobile*"
+                  error={formError.mobile}
+                />
+                <div className="flex gap-4 items-end">
+                  <div className="">
+                    <ButtonWithShadow
+                      title="Continue"
+                      onClick={handleSubmit}
+                      sideIcon={RightArrow}
+                      className=""
+                    />
+                  </div>
+                  <span
+                    className="uppercase underline tracking-[2px] cursor-pointer"
+                    onClick={() => {
+                      setIsLogin(true);
+                      setFormData(defaultForm);
+                      setFormError(defaultError);
+                    }}
+                  >
+                    Login
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -47,7 +47,6 @@ const MainPage = async () => {
       description: "Gift all the feels this season with soft and cozy fleece.",
     },
   ];
-  console.log(shoes.data);
   return (
     <div>
       <div className="flex relative">
@@ -170,6 +169,9 @@ const MainPage = async () => {
                       price={items.price}
                       className="w-full"
                       token={token}
+                      id={items?.id}
+                      slug_url={items.slug_url}
+                      routing_url={"/shoes/detail/"}
                     />
                   </div>
                 );
@@ -195,7 +197,9 @@ const MainPage = async () => {
                       image={items?.colorVariation[0]?.image_url}
                       price={items.price}
                       className="w-full mb-8 media-600:w-40 md:w-80 lg:w-52 media-1366:w-72"
-                      id={`snap_list_${index}`}
+                      id={items?.id}
+                      slug_url={items.slug_url}
+                      routing_url={"/shoes/detail/"}
                       token={token}
                     />
                   </div>
