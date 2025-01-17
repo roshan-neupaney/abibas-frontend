@@ -9,8 +9,10 @@ import { cookies } from "next/headers";
 import DeliveryAddressForm from "../../../components/checkout/deliveryAddressForm";
 import Link from "next/link";
 import CheckoutProductCard from "../../../components/checkout/checkoutProductCard";
+import { authorization } from "../../../hoc/auth";
 
 async function getData(token: string) {
+  authorization(token)
   try {
     const response = [
       await ServerSideGet(token, CRUD_ADD_TO_CART),

@@ -6,8 +6,10 @@ import Esewa from "../../../../components/paymentMethod/esewa";
 import { ButtonWithShadow } from "@/subcomponents/button";
 import RightArrowIcon from "../../../../public/icon/right-arrow-white.svg";
 import Link from "next/link";
+import { authorization } from "../../../../hoc/auth";
 
 async function getData(token: string, id: string) {
+  authorization(token)
   try {
     const response = [await ServerSideGetWithId(token, CRUD_ORDER, id)];
     const [orderDetail] = response;

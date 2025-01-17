@@ -12,7 +12,6 @@ interface DetailProps {
 }
 
 const Detail = ({ shoeDetails={}, token='', slug }: DetailProps) => {
-console.log(shoeDetails)
 const logView = async() => {
   await JsonPost(CRUD_INTERACTION, {
     shoe_id: shoeDetails?.id,

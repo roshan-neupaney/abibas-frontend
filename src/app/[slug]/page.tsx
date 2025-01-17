@@ -69,7 +69,7 @@ const ShoePage = async ({ params, searchParams }: ShoePageProps) => {
           >
             {slug === "search" ? "All" : slug} Shoes
           </span>{" "}
-          <span className="text-xs text-[#767677]">(asdf)</span>
+          <span className="text-xs text-[#767677]">({shoe_list?.data?.length})</span>
         </div>
         <FilterBox
           color={color?.data}

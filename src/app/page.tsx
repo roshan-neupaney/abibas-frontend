@@ -7,15 +7,30 @@ import ProductCard from "../../components/productCard";
 import ProductSlider from "../../components/productSlider";
 import VideoImageCard from "../../components/videoImageCard";
 import { cookies } from "next/headers";
-import { ServerSideGet } from "@/utilities/apiCalls";
+import { ServerSideGet, ServerSideGetWithParams } from "@/utilities/apiCalls";
 import { CRUD_SHOE } from "../../config/endpoints";
 import Link from "next/link";
+import { authorization } from "../../hoc/auth";
+import BestSeller from "../../components/homepage/bestSeller";
 
 async function getData(token: string | undefined) {
+  authorization(token);
   try {
-    const response = [await ServerSideGet(token, CRUD_SHOE)];
-    const [shoes] = response;
-    return { shoes };
+    const response = [
+      await ServerSideGet(token, CRUD_SHOE),
+      await ServerSideGetWithParams(
+        token,
+        CRUD_SHOE,
+        `sortBy=newest&pageSize=15`
+      ),
+      await ServerSideGetWithParams(
+        token,
+        CRUD_SHOE,
+        `sortBy=top_sellers&pageSize=15`
+      ),
+    ];
+    const [shoes, shoe_latest, shoe_top_sellers] = response;
+    return { shoes, shoe_latest, shoe_top_sellers };
   } catch (e) {
     console.error(e);
   }
@@ -23,7 +38,8 @@ async function getData(token: string | undefined) {
 
 const MainPage = async () => {
   const token = cookies().get("access_token")?.value;
-  const { shoes }: any = await getData(token);
+  const { shoes, shoe_latest, shoe_top_sellers }: any = await getData(token);
+  console.log(shoe_latest, "shoe_latest", shoe_top_sellers);
   const featuredData = [
     {
       title: "HOLIDAY '24",
@@ -141,73 +157,11 @@ const MainPage = async () => {
           </ProductSlider>
         </div>
       )}
-      <div className="flex px-4 media-390:px-8 md:pr-0 md:pl-14 xl:pl-28 xl:pr-0 mt-20 2xl:px-1">
-        <section className="flex flex-col gap-5 w-full">
-          <div className="flex justify-between">
-            <div className="flex gap-2">
-              <Button
-                title="New Arrivals"
-                className="w-fit bg-black text-white flex items-center px-3 h-11"
-              />
-              <Button
-                title="Best Sellers"
-                className="w-fit flex items-center px-3 h-11"
-              />
-            </div>
-            <div className="media-600:flex uppercase underline hidden font-bold text-sm tracking-[2px] sm:mt-4 md:mt-0 media-390:mr-8 md:mr-16 2xl:mr-28">
-              View All
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-[10px] media-600:hidden overflow-x-scroll slider-container">
-            {shoes?.data
-              ?.slice(0, 6)
-              ?.map((items: Record<string, any>, index: number) => {
-                return (
-                  <div className="col-span-1" key={index}>
-                    <ProductCard
-                      image={items?.colorVariation[0]?.image_url}
-                      price={items.price}
-                      className="w-full"
-                      token={token}
-                      id={items?.id}
-                      slug_url={items.slug_url}
-                      routing_url={"/shoes/detail/"}
-                    />
-                  </div>
-                );
-              })}
-            <div className="col-span-2">
-              <Button
-                title="View All"
-                className="px-4 text-white bg-black uppercase w-full h-12 items-center tracking-[2px]"
-                sideIcon={NextIconWhite}
-                iconWidth={30}
-              />
-            </div>
-          </div>
-          <ProductSlider className="hidden media-600:flex gap-[10px] recommendedSlider">
-            {shoes.data
-              ?.slice(0, 10)
-              ?.map((items: Record<string, any>, index: number) => {
-                return (
-                  <div key={index}>
-                    <ProductCard
-                      title={items?.title}
-                      category={items?.category?.title}
-                      image={items?.colorVariation[0]?.image_url}
-                      price={items.price}
-                      className="w-full mb-8 media-600:w-40 md:w-80 lg:w-52 media-1366:w-72"
-                      id={items?.id}
-                      slug_url={items.slug_url}
-                      routing_url={"/shoes/detail/"}
-                      token={token}
-                    />
-                  </div>
-                );
-              })}
-          </ProductSlider>
-        </section>
-      </div>
+      <BestSeller
+        token={token}
+        shoeLatest={shoe_latest}
+        shoeTopSellers={shoe_top_sellers}
+      />
       <div className="flex mt-20 pl-4 media-390:pl-8 md:pl-16 media-960:px-16 media-1440:px-28">
         <ProductSlider className="gap-[10px]">
           {featuredData?.map((items, index) => {

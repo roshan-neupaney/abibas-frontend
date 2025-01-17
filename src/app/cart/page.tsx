@@ -6,8 +6,10 @@ import Link from "next/link";
 import { ServerSideGet } from "@/utilities/apiCalls";
 import { CRUD_ADD_TO_CART } from "../../../config/endpoints";
 import { cookies } from "next/headers";
+import { authorization } from "../../../hoc/auth";
 
 async function getData(token: string) {
+  authorization(token)
   try {
     const response = [await ServerSideGet(token, CRUD_ADD_TO_CART)];
     const [cartItems] = response;
