@@ -1,12 +1,6 @@
 import { cookies } from "next/headers";
 import Login from "./login";
 
-interface loginTypes {
-  email: string;
-  role: string;
-  password: string;
-}
-
 const LoginPage = async () => {
   const setCookies = async (data: any) => {
     "use server";

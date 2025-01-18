@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import { Button } from "@/subcomponents/button";
 import NextIconBlack from "../../public/icon/right-arrow-black.svg";
-import NextIconWhite from "../../public/icon/right-arrow-white.svg";
 import ProductCard from "../../components/productCard";
 import ProductSlider from "../../components/productSlider";
 import VideoImageCard from "../../components/videoImageCard";

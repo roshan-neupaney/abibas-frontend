@@ -66,6 +66,7 @@ const SignUp = () => {
       }
     } catch (e) {
       toast.error("Login Unsuccessful");
+      console.error(e)
       setLoading(false)
     }
   };

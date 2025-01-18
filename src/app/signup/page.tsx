@@ -1,11 +1,5 @@
 import SignUp from "./signup";
 
-interface loginTypes {
-  email: string;
-  role: string;
-  password: string;
-}
-
 const SignUpPage = async () => {
   return (
     <div className="flex justify-center w-screen h-screen bg-[#fcfcfc] fixed top-0 z-10">

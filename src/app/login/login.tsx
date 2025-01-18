@@ -59,6 +59,7 @@ const Login = ({ setCookies }: any) => {
       }
     } catch (e) {
       toast.error("Login Unsuccessful");
+      console.error(e)
       setLoading(false);
     }
   };
