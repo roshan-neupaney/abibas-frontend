@@ -154,7 +154,7 @@ const DesktopView = ({
             return (
               <span className="relative col-span-1 aspect-square" key={img.image_url}>
                 <Image
-                  src={IMAGE_URL + img.image_url}
+                  src={IMAGE_URL + img?.image_url}
                   fill
                   alt="image"
                   quality={100}
@@ -193,7 +193,7 @@ const DesktopView = ({
           >
             {shoeDetails?.title}
           </div>
-          <div className="mt-2.5 font-bold">${shoeDetails?.price}</div>
+          <div className="mt-2.5 font-bold">Rs.{shoeDetails?.price}</div>
         </div>
         <div className="mt-10">
           <div>

@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-const clearCachesByServerAction = async (path) => {
+const clearCachesByServerAction = async (path='/') => {
   try {
     if (path) {
       revalidatePath(path);
