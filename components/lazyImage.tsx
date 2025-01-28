@@ -25,6 +25,7 @@ const LazyImage = (props: any) => {
       alt=""
       className={className}
       quality={100}
+      unoptimized={true}
     />
   );
 };
