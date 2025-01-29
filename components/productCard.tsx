@@ -71,7 +71,7 @@ const ProductCard = ({
         className={`flex flex-col gap-3 max-w-72 bg-white ${className} border-black hover:lg:border`}
       >
         <span className="relative">
-          <LazyImage src={IMAGE_URL + image} width={600} height={0} alt="" />
+          <LazyImage src={IMAGE_URL + image} width={600} height={600} alt="" />
           <span className="absolute bg-white text-sm text-black bottom-0 left-2 p-1">
             Rs. {price}
           </span>

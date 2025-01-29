@@ -16,17 +16,27 @@ const LazyImage = (props: any) => {
     setImgSrc(noImage);
   };
 
+  const [isLoaded, setIsLoaded] = useState(false);
+
   return (
-    <Image
-      src={imgSrc}
-      {...rest}
-      loading="lazy"
-      onError={handleError}
-      alt=""
-      className={className}
-      quality={100}
-      unoptimized={true}
-    />
+    <div
+      className="relative"
+    >
+      {!isLoaded && (
+        <div className="absolute top-0 animate-pulse bg-gray-200 rounded-lg w-72 h-72"></div>
+      )}
+      <Image
+        src={imgSrc}
+        {...rest}
+        loading="lazy"
+        onError={handleError}
+        alt=""
+        className={`${className} max-h-72`}
+        quality={100}
+        unoptimized={true}
+        onLoad={() => setIsLoaded(true)}
+      />
+    </div>
   );
 };
 

@@ -332,3 +332,12 @@ body::-webkit-scrollbar {
   right: 0.5rem;
   top: 3rem;
 }
+
+@keyframes progress {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-progress {
+  animation: progress 1.5s infinite ease-in-out;
+}

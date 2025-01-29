@@ -4,16 +4,19 @@ import { ButtonWithShadow } from "@/subcomponents/button";
 import RightArrowIcon from "../../../public/icon/right-arrow-white.svg";
 import Link from "next/link";
 import { ServerSideGet } from "@/utilities/apiCalls";
-import { CRUD_ADD_TO_CART } from "../../../config/endpoints";
+import { CRUD_ADD_TO_CART, GET_MY_DETAIL } from "../../../config/endpoints";
 import { cookies } from "next/headers";
 import { authorization } from "../../../hoc/auth";
 
 async function getData(token: string) {
-  authorization(token)
+  authorization(token);
   try {
-    const response = [await ServerSideGet(token, CRUD_ADD_TO_CART)];
-    const [cartItems] = response;
-    return { cartItems };
+    const response = [
+      await ServerSideGet(token, CRUD_ADD_TO_CART),
+      await ServerSideGet(token, GET_MY_DETAIL),
+    ];
+    const [cartItems, userDetail] = response;
+    return { cartItems, userDetail };
   } catch (error) {
     console.error(error);
   }
@@ -21,7 +24,7 @@ async function getData(token: string) {
 
 const CartPage = async () => {
   const token = cookies().get("access_token")?.value || "";
-  const { cartItems }: any = await getData(token);
+  const { cartItems, userDetail }: any = await getData(token);
 
   const itemsPrice = cartItems.data
     .reduce(
@@ -48,13 +51,13 @@ const CartPage = async () => {
   return (
     <div className="px-4 media-960:flex-row flex flex-col gap-10 max-w-[1280px] m-auto">
       {/* list of items */}
-      <div className="flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col mb-5">
         <div className="px-8 py-8 mt-10 mb-5 bg-[#ECEFF1] greeting-card relative">
           <span
             className="text-lg uppercase "
             style={{ fontFamily: "var(--font-adineue)" }}
           >
-            Hello Roshan
+            Hello {userDetail?.data?.firstName || ""}
           </span>
         </div>
         <div className="mt-4">

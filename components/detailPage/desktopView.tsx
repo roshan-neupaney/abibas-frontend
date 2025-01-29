@@ -16,6 +16,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import clearCachesByServerAction from "../../hooks/revalidate";
 import useStore from "../../zustand/store";
+import DetailImage from "./DetailImage";
 
 interface DesktopViewProps {
   images: Array<Record<string, any>>;
@@ -150,17 +151,9 @@ const DesktopView = ({
     <div className="media-960:flex hidden">
       <div className="flex flex-1 flex-col">
         <div className="grid grid-cols-2 gap-1">
-          {colorVariation?.colorVariationImages?.map((img: any) => {
+          {colorVariation?.colorVariationImages?.map((img: Record<string, string>) => {
             return (
-              <span className="relative col-span-1 aspect-square" key={img.image_url}>
-                <Image
-                  src={IMAGE_URL + img?.image_url}
-                  fill
-                  alt="image"
-                  quality={100}
-                  unoptimized
-                />
-              </span>
+              <DetailImage image_url={img?.image_url} />
             );
           })}
         </div>

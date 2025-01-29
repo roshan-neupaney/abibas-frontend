@@ -11,14 +11,14 @@ import FlagNepal from "../../public/icon/flag-nepal.svg";
 import CustomSearchInput from "@/subcomponents/searchInput";
 import LoginModal from "../modal/loginModal";
 import Link from "next/link";
-import useStore from '../../zustand/store'
+import useStore from "../../zustand/store";
 
 interface NavbarProps {
-  setCookies: (val:string) => void;
+  setCookies: (val: string) => void;
 }
 
-const Navbar = ({setCookies}: NavbarProps) => {
-  const { status, toggleLoginModalTrue , toggleLoginModalFalse} = useStore();
+const Navbar = ({ setCookies }: NavbarProps) => {
+  const { status, toggleLoginModalTrue, toggleLoginModalFalse } = useStore();
   return (
     <div className="navbar-wrapper bg-inherit sticky top-0 w-full z-10">
       <div className="notification-banner flex p-2 justify-center bg-[#000000] font-adihaus text-[11px] items-center h-11 font-bold">
@@ -86,13 +86,23 @@ const Navbar = ({setCookies}: NavbarProps) => {
           </div>
           <div className="flex col-span-4 gap-5 items-end uppercase lg:text-xs xl:text-sm xl:justify-center">
             <div className="font-adihaus flex font-bold gap-5">
-              <span>Men</span>
-              <span>Women</span>
-              <span>Kids</span>
+              <Link href={"/Men's"}>
+                <span>Men</span>
+              </Link>
+              <Link href={"/Women's"}>
+                <span>Women</span>
+              </Link>
+              <Link href={"/Kid's"}>
+                <span>Kids</span>
+              </Link>
             </div>
             <div className="flex gap-5">
-              <span>Sale</span>
-              <span>New & Trending</span>
+              <Link href={"search?sortBy=top_sellers"}>
+                <span>Sale</span>
+              </Link>
+              <Link href={"search?sortBy=newest"}>
+                <span>New & Trending</span>
+              </Link>
             </div>
           </div>
 
@@ -105,10 +115,7 @@ const Navbar = ({setCookies}: NavbarProps) => {
               placeholder="Search"
               rightIcon={SearchIcon}
             />
-            <span
-              className="min-w-5"
-              onClick={() => toggleLoginModalTrue()}
-            >
+            <span className="min-w-5" onClick={() => toggleLoginModalTrue()}>
               <Image src={ProfileIcon} width={20} height={20} alt="" />
             </span>
             <span className="min-w-5">

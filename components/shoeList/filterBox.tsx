@@ -108,14 +108,14 @@ const FilterBox = ({
       });
     }
   };
-  console.log(filters["sortBy"]);
+
   return (
     <div className="">
       <span
         onClick={() =>
           updateState("mainContainer", !openBox.mainContainer, toggleBox)
         }
-        className="flex items-center gap-4 media-960:border border-black min-h-10 px-4 w-fit"
+        className="flex items-center gap-4 media-960:border border-black min-h-10 px-4 w-fit cursor-pointer"
       >
         <span className="hidden media-960:flex uppercase text-sm font-bold tracking-[2px]">
           Filter & Sort
