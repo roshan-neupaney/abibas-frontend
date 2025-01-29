@@ -114,7 +114,7 @@ const MobileSlider = ({ images, handleColorClick, formData }: MobileSliderProps)
           {images?.map((img, index) => {
             return (
               <div className="relative min-w-full aspect-square" key={index}>
-                <Image src={IMAGE_URL + img?.image_url} fill alt="" />
+                <Image src={IMAGE_URL + img?.image_url} fill alt="" unoptimized />
               </div>
             );
           })}
@@ -137,7 +137,7 @@ const MobileSlider = ({ images, handleColorClick, formData }: MobileSliderProps)
                 }}
                 key={index}
               >
-                <Image src={IMAGE_URL + img?.image_url} fill alt="slider-image" />
+                <Image src={IMAGE_URL + img?.image_url} fill alt="slider-image" unoptimized/>
               </div>
             );
           })}

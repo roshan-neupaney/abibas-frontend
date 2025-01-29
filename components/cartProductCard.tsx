@@ -92,6 +92,7 @@ const CartProductCard = ({ productData, token }: CartProductCardProps) => {
           width={240}
           height={240}
           alt="product-image"
+          unoptimized
         />
       </div>
       <div className="flex flex-1 flex-col justify-between pl-8">
@@ -109,7 +110,7 @@ const CartProductCard = ({ productData, token }: CartProductCardProps) => {
               className="p-4 cursor-pointer"
               onClick={() => handleRemove(productData.id)}
             >
-              <Image src={crossIcon} width={25} height={25} alt="cross" />
+              <Image src={crossIcon} width={25} height={25} alt="cross" unoptimized />
             </div>
             <div className="px-4 cursor-pointer" onClick={handleFavoriteSubmit}>
               <Image
@@ -117,6 +118,7 @@ const CartProductCard = ({ productData, token }: CartProductCardProps) => {
                 width={25}
                 height={25}
                 alt="cross"
+                unoptimized
               />
             </div>
           </div>

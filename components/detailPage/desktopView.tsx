@@ -158,6 +158,7 @@ const DesktopView = ({
                   fill
                   alt="image"
                   quality={100}
+                  unoptimized
                 />
               </span>
             );
@@ -219,6 +220,7 @@ const DesktopView = ({
                               : "3px solid transparent",
                           transition: "all 0.4s ease",
                         }}
+                        unoptimized
                       />
                     </span>
                   </div>

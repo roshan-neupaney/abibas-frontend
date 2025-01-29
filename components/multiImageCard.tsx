@@ -31,7 +31,7 @@ const MultiImageCard = ({
       id={id}
     >
       <span className="relative">
-        <Image src={image} width={600} height={0} alt="card image" />
+        <Image src={image} width={600} height={0} alt="card image" unoptimized />
       </span>
       {(cardData.title || cardData.category) && (
         <div className="flex flex-col px-2 gap-1">

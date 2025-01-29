@@ -40,7 +40,7 @@ const VideoImageCard = ({
     >
       <span className="relative">
         {isImage ? (
-          <Image src={image} width={600} height={0} alt="" />
+          <Image src={image} width={600} height={0} alt="" unoptimized />
         ) : (
           <video loop autoPlay muted width={"100%"}>
             <source src={image} />
