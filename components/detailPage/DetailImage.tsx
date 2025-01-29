@@ -9,7 +9,7 @@ interface DetailImageProps {
 const DetailImage = ({ image_url }: DetailImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   return (
-    <span className="relative col-span-1 aspect-square" key={image_url}>
+    <span className="relative col-span-1 aspect-square">
       {!isLoaded && (
         <div className="absolute top-0 animate-pulse bg-gray-200 rounded-lg w-full h-full"></div>
       )}

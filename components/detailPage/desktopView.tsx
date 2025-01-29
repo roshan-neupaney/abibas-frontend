@@ -37,8 +37,7 @@ const DesktopView = ({
 }: DesktopViewProps) => {
   const [colorVariation, setColorVariation] = useState<Record<string, any>>({
     id: images[1]?.id,
-    colorVariationImages: images[1].colorVariationImages
-    ,
+    colorVariationImages: images[1].colorVariationImages,
   });
   const [colorSizesAvailable, setColorSizesAvailable] = useState<string[]>([]);
   const [formData, setFormData] = useState({
@@ -151,11 +150,15 @@ const DesktopView = ({
     <div className="media-960:flex hidden">
       <div className="flex flex-1 flex-col">
         <div className="grid grid-cols-2 gap-1">
-          {colorVariation?.colorVariationImages?.map((img: Record<string, string>) => {
-            return (
-              <DetailImage image_url={img?.image_url} />
-            );
-          })}
+          {colorVariation?.colorVariationImages?.map(
+            (img: Record<string, string>) => {
+              return (
+                <React.Fragment key={img.image_url}>
+                  <DetailImage image_url={img?.image_url} />
+                </React.Fragment>
+              );
+            }
+          )}
         </div>
         <div className="media-960:px-5 xl:px-8 media-1440:px-10 2xl:px-16 max-w-[970px] w-full m-auto mt-20">
           <div className="first:border-t-2 border-b-2">
