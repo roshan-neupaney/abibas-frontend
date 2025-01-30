@@ -20,8 +20,7 @@ export const authorizationClient = (value: string | undefined) => {
 
 export const authorization = (value: string | undefined) => {
   if (!value) {
-    clearCachesByServerAction()
-    redirect('login');
+    redirect('/login');
   } else {
     const decodeToken = DecodeJWT(value);
     const expiryDate = decodeToken.exp * 1000;
