@@ -66,7 +66,7 @@ const ProductCard = ({
   return (
     <div className="relative w-fit">
       
-      <Link href={`${routing_url}${slug_url}`}>
+      <Link href={`${routing_url}${slug_url}`} className="product-card">
       <div
         className={`flex flex-col gap-3 max-w-72 bg-white ${className} border-black hover:lg:border`}
       >

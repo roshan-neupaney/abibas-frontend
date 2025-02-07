@@ -26,6 +26,7 @@ const DetailPage = async ({ params }: detailPageProps) => {
   const { shoe_details }: any = await getData(slug, token);
   return (
     <div className="">
+      <div className="shoe_id hidden">{shoe_details?.data?.id}</div>
       <Detail shoeDetails={shoe_details?.data} token={token} slug={slug} />
     </div>
   );
