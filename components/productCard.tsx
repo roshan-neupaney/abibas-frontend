@@ -23,6 +23,7 @@ interface ProductCardProps {
   price: string;
   token?: string;
   isFav?: boolean;
+  showFav?: boolean;
 }
 
 const ProductCard = ({
@@ -36,6 +37,7 @@ const ProductCard = ({
   price,
   token,
   isFav = false,
+  showFav = true,
 }: ProductCardProps) => {
   const router = useRouter();
   const {toggleLoginModalTrue} = useStore();
@@ -86,6 +88,7 @@ const ProductCard = ({
         )}
       </div>
       </Link>
+      {showFav &&
       <span
         className="absolute top-4 right-4"
         onClick={handleFavoriteSubmit}
@@ -96,7 +99,7 @@ const ProductCard = ({
           height={20}
           alt=""
         />
-      </span>
+      </span>}
     </div>
   );
 };

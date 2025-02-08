@@ -79,7 +79,6 @@ const LoginModal = ({ open, handleClose, setCookies }: LoginModalProps) => {
           ? await Login_Post(LOGIN, beautifiedPayload)
           : await Login_Post(SIGNUP, beautifiedPayload);
         const { status, data }: any = response;
-        console.log(status);
         if (status) {
           if (isLogin) {
             setCookies(data?.access_token);

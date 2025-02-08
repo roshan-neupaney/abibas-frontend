@@ -4,14 +4,17 @@ import MobileView from "../../../../../components/detailPage/mobileView";
 import DesktopView from "../../../../../components/detailPage/desktopView";
 import { CRUD_INTERACTION } from "../../../../../config/endpoints";
 import { JsonPost } from "@/utilities/apiCalls";
+import ProductSlider from "../../../../../components/productSlider";
+import ProductCard from "../../../../../components/productCard";
 
 interface DetailProps {
   shoeDetails: Record<string, any>;
   token: string | undefined;
   slug: string;
+  recommends: Array<Record<string, any>>;
 }
 
-const Detail = ({ shoeDetails={}, token='', slug }: DetailProps) => {
+const Detail = ({ shoeDetails={}, token='', slug, recommends }: DetailProps) => {
 const logView = async() => {
   await JsonPost(CRUD_INTERACTION, {
     shoe_id: shoeDetails?.id,
@@ -28,7 +31,7 @@ const logView = async() => {
     }
   }, [shoeDetails?.id])
 
-
+console.log(recommends)
   //listing all images of colorVariation
   const images =
     shoeDetails?.colorVariation?.map((items: any) => {
@@ -51,9 +54,38 @@ const logView = async() => {
     return result;
   }, []);
   return (
-    <div>
+    <div className="flex-col">
       <MobileView images={finalImages} totalSizes={totalSizes} shoeDetails={shoeDetails} token={token} />
       <DesktopView images={finalImages} totalSizes={totalSizes} shoeDetails={shoeDetails} token={token} />
+      {recommends?.length > 0 && (
+        <div className="flex flex-col mt-10 mx-1 gap-2">
+          <span
+            className="font-bold text-3xl ml-2 uppercase"
+            style={{ fontFamily: "var(--font-adineue)" }}
+          >
+            You may also like
+          </span>
+          <ProductSlider className="gap-4">
+            {recommends?.map((items: Record<string, any>, index: number) => {
+              return (
+                <div key={index}>
+                  <ProductCard
+                    title={items?.title}
+                    price={items.price}
+                    category={items?.type}
+                    image={items?.colorVariation[0].image_url}
+                    className="md:w-[316px] xl:w-[380px]"
+                    id={items?.id}
+                    slug_url={items.slug_url}
+                    routing_url={"/shoes/detail/"}
+                    token={token}
+                  />
+                </div>
+              );
+            })}
+          </ProductSlider>
+        </div>
+      )}
     </div>
   );
 };

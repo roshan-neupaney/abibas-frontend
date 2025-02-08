@@ -7,7 +7,7 @@ import ProductSlider from "../../components/productSlider";
 import VideoImageCard from "../../components/videoImageCard";
 import { cookies } from "next/headers";
 import { ServerSideGet, ServerSideGetWithParams } from "@/utilities/apiCalls";
-import { CRUD_SHOE } from "../../config/endpoints";
+import { COLLABORATIVE_RECOMMENDATION, CRUD_SHOE } from "../../config/endpoints";
 import Link from "next/link";
 import { authorization } from "../../hoc/auth";
 import BestSeller from "../../components/homepage/bestSeller";
@@ -27,9 +27,13 @@ async function getData(token: string | undefined) {
         CRUD_SHOE,
         `sortBy=top_sellers&pageSize=15`
       ),
+      await ServerSideGet(
+        token,
+        COLLABORATIVE_RECOMMENDATION,
+      ),
     ];
-    const [shoes, shoe_latest, shoe_top_sellers] = response;
-    return { shoes, shoe_latest, shoe_top_sellers };
+    const [shoes, shoe_latest, shoe_top_sellers, collab_recommends] = response;
+    return { shoes, shoe_latest, shoe_top_sellers, collab_recommends };
   } catch (e) {
     console.error(e);
   }
@@ -37,8 +41,9 @@ async function getData(token: string | undefined) {
 
 const MainPage = async () => {
   const token = cookies().get("access_token")?.value;
-  const { shoes, shoe_latest, shoe_top_sellers }: any = await getData(token);
-  console.log(shoe_latest, "shoe_latest", shoe_top_sellers);
+  const { shoes, shoe_latest, shoe_top_sellers, collab_recommends }: any = await getData(token);
+  // console.log(shoe_latest, "shoe_latest", shoe_top_sellers);
+  console.log('collab_recommends', collab_recommends)
   const featuredData = [
     {
       title: "HOLIDAY '24",
@@ -136,7 +141,7 @@ const MainPage = async () => {
             Still Interested?
           </span>
           <ProductSlider className="gap-4">
-            {shoes?.data?.map((items: Record<string, any>, index: number) => {
+            {collab_recommends?.data?.map((items: Record<string, any>, index: number) => {
               return (
                 <div key={index}>
                   <ProductCard

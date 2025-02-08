@@ -10,7 +10,6 @@ const BestSeller = ({ token, shoeTopSellers, shoeLatest }: any) => {
   const [activeTab, setActiveTab] = useState("latest");
   const shoes =
     activeTab === "top_seller" ? shoeTopSellers?.data : shoeLatest?.data;
-  console.log(shoes);
   return (
     <div className="flex px-4 media-390:px-8 md:pr-0 md:pl-14 xl:pl-28 xl:pr-0 mt-20 2xl:px-1">
       <section className="flex flex-col gap-5 w-full">

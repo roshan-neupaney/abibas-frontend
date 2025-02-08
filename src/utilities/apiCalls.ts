@@ -8,7 +8,6 @@ export const Login_Post = async (url:string, payload: Record<string,any>) => {
     };
     const res = await LOGIN_POST(url, payload);
     const { status, data } = res;
-    console.log("res", res, status)
     if (status == 200 || status == 201) {
       response.data = data;
       response.status = true;
