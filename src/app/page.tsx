@@ -132,7 +132,7 @@ const MainPage = async () => {
           </div>
         </div>
       </div>
-      {shoes?.data?.length > 0 && (
+      {collab_recommends?.data?.length > 0 && (
         <div className="flex flex-col mt-10 mx-1 gap-2">
           <span
             className="font-bold text-3xl ml-2"
@@ -141,7 +141,7 @@ const MainPage = async () => {
             Still Interested?
           </span>
           <ProductSlider className="gap-4">
-            {collab_recommends?.data?.map((items: Record<string, any>, index: number) => {
+            {collab_recommends?.data?.length && collab_recommends?.data?.map((items: Record<string, any>, index: number) => {
               return (
                 <div key={index}>
                   <ProductCard

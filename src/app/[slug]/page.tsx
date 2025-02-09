@@ -15,7 +15,7 @@ async function getData(
   slug: string,
   searchParams: searchParamsProps
 ) {
-  const { colors, brands, sortBy } = searchParams;
+  const { colors, brands, sortBy, search } = searchParams;
   const categories = slug === "search" ? "" : slug;
   try {
     const res = [
@@ -25,7 +25,7 @@ async function getData(
       await ServerSideGetWithParams(
         token,
         CRUD_SHOE,
-        `categories=${categories}&colors=${colors ?? ""}&brands=${brands ?? ""}&sortBy=${sortBy ?? ""}`
+        `categories=${categories}&colors=${colors ?? ""}&brands=${brands ?? ""}&sortBy=${sortBy ?? ""}&search=${search ?? ''}`
       ),
     ];
     const [category, color, brand, shoe_list] = res;
@@ -43,6 +43,7 @@ export interface searchParamsProps {
   colors?: string;
   brands?: string;
   sortBy?: string;
+  search?: string;
 }
 
 interface ShoePageProps {

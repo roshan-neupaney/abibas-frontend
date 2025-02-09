@@ -12,6 +12,7 @@ import CustomSearchInput from "@/subcomponents/searchInput";
 import LoginModal from "../modal/loginModal";
 import Link from "next/link";
 import useStore from "../../zustand/store";
+import Search from "./search";
 
 interface NavbarProps {
   setCookies: (val: string) => void;
@@ -107,14 +108,7 @@ const Navbar = ({ setCookies }: NavbarProps) => {
           </div>
 
           <div className="flex col-span-3 gap-5 justify-end items-end">
-            <CustomSearchInput
-              value=""
-              onChange={() => {
-                ("");
-              }}
-              placeholder="Search"
-              rightIcon={SearchIcon}
-            />
+            <Search/>
             <span className="min-w-5" onClick={() => toggleLoginModalTrue()}>
               <Image src={ProfileIcon} width={20} height={20} alt="" />
             </span>

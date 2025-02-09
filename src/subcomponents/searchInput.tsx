@@ -16,6 +16,7 @@ interface CustomSearchInputProps {
   required?: boolean;
   autoComplete?: string;
   width?: string;
+  onKeyPress?: any;
 }
 const CustomSearchInput = ({
   title,
@@ -30,6 +31,7 @@ const CustomSearchInput = ({
   required = false,
   autoComplete = "on",
   width = "",
+  onKeyPress
 }: CustomSearchInputProps) => {
   return (
     <div
@@ -64,6 +66,7 @@ const CustomSearchInput = ({
           }}
           required={required}
           autoComplete={autoComplete}
+          onKeyDown={onKeyPress}
         />
         {rightIcon && (
           <span className="absolute right-2 top-1/4" onClick={iconClick}>

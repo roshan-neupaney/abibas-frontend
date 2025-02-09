@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import { DecodeJWT } from "../src/utilities/helper";
 import useStore from "../zustand/store";
-import clearCachesByServerAction from "../hooks/revalidate";
 
 export const authorizationClient = (value: string | undefined) => {
   const { toggleLoginModalTrue } = useStore();
