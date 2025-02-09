@@ -8,7 +8,6 @@ import ProfileIcon from "../../public/icon/profile.svg";
 import SearchIcon from "../../public/icon/search.svg";
 import ShoppingBag from "../../public/icon/shopping-bag.svg";
 import FlagNepal from "../../public/icon/flag-nepal.svg";
-import CustomSearchInput from "@/subcomponents/searchInput";
 import LoginModal from "../modal/loginModal";
 import Link from "next/link";
 import useStore from "../../zustand/store";

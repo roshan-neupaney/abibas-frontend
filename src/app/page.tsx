@@ -41,7 +41,7 @@ async function getData(token: string | undefined) {
 
 const MainPage = async () => {
   const token = cookies().get("access_token")?.value;
-  const { shoes, shoe_latest, shoe_top_sellers, collab_recommends }: any = await getData(token);
+  const { shoe_latest, shoe_top_sellers, collab_recommends }: any = await getData(token);
   // console.log(shoe_latest, "shoe_latest", shoe_top_sellers);
   console.log('collab_recommends', collab_recommends)
   const featuredData = [
