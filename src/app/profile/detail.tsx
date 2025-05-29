@@ -4,7 +4,7 @@ import CustomInput from "@/subcomponents/input";
 import { updateState } from "@/utilities/helper";
 import RightArrowIcon from "../../../public/icon/right-arrow-white.svg";
 import { useState } from "react";
-import { CRUD_USER, CRUD_USER_EDIT } from "../../../config/endpoints";
+import { CRUD_USER_EDIT } from "../../../config/endpoints";
 import { JsonPatch } from "@/utilities/apiCalls";
 import toast from "react-hot-toast";
 import useStore from "../../../zustand/store";
