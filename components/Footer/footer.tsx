@@ -159,13 +159,13 @@ const Footer = () => {
           <h5 className="font-bold text-lg uppercase tracking-[1px] leading-6 mb-[10px]">
             Follow Us
           </h5>
-          <ul className="text-sm">
+          <ul className="text-sm flex flex-col gap-4">
             <li className="leading-6">
               <span>
                 <Image
                   src={facebookLogo}
-                  width={25}
-                  height={25}
+                  width={30}
+                  height={30}
                   alt="facebook"
                 />
               </span>
