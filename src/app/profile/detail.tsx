@@ -45,7 +45,7 @@ const ProfilePage = ({ userDetail, token }: ProfileDetailProps) => {
     setLoading(true);
     try {
       const res = await JsonPatch(CRUD_USER_EDIT, "", formData, token);
-      const { status, statusCode, data }: any = res;
+      const { status, statusCode }: any = res;
       if (status) {
         toast.success("Profile edited successfully");
         setIsEditing(false);
