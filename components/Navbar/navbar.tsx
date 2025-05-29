@@ -12,13 +12,26 @@ import LoginModal from "../modal/loginModal";
 import Link from "next/link";
 import useStore from "../../zustand/store";
 import Search from "./search";
+import { authorizationClient } from "../../hoc/auth";
+import { useRouter } from "next/navigation";
 
 interface NavbarProps {
   setCookies: (val: string) => void;
+  token?: string;
 }
 
-const Navbar = ({ setCookies }: NavbarProps) => {
+const Navbar = ({ setCookies, token }: NavbarProps) => {
   const { status, toggleLoginModalTrue, toggleLoginModalFalse } = useStore();
+  const router = useRouter();
+  
+  const checkAuthorization = () => {
+    const isAuthorized = authorizationClient(token);
+    if(isAuthorized){
+      router.push('/profile');
+    } else {
+      toggleLoginModalTrue();
+    }
+  }
   return (
     <div className="navbar-wrapper bg-inherit sticky top-0 w-full z-10">
       <div className="notification-banner flex p-2 justify-center bg-[#000000] font-adihaus text-[11px] items-center h-11 font-bold">
@@ -108,7 +121,7 @@ const Navbar = ({ setCookies }: NavbarProps) => {
 
           <div className="flex col-span-3 gap-5 justify-end items-end">
             <Search/>
-            <span className="min-w-5" onClick={() => toggleLoginModalTrue()}>
+            <span className="min-w-5" onClick={checkAuthorization}>
               <Image src={ProfileIcon} width={20} height={20} alt="" />
             </span>
             <span className="min-w-5">

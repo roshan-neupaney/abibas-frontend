@@ -130,13 +130,14 @@ const FilterBox = ({
               <div className="text-lg font-bold ">Filter & Sort</div>
               <div className="flex items-center gap-2">
                 <span
-                  className="underline"
+                  className="underline cursor-pointer"
                   style={{ color: "#767677" }}
                   onClick={() => removeFilters("all")}
                 >
                   Clear All
                 </span>
                 <span
+                className="cursor-pointer"
                   onClick={() =>
                     updateState(
                       "mainContainer",
@@ -162,7 +163,7 @@ const FilterBox = ({
                       className="flex m-1.5 px-2.5 gap-1.5 bg-[#ECEFF1] w-fit h-9 items-center"
                       onClick={() => removeFilters(items)}
                     >
-                      <span>
+                      <span className="cursor-pointer">
                         <Image src={CrossIcon} width={20} height={20} alt="" />
                       </span>
                       <span>{items}</span>
@@ -184,7 +185,7 @@ const FilterBox = ({
             {openBox.sortBy && (
               <>
                 <div
-                  className="uppercase max-h-[70px] min-h-[50px] content-center border-b p-4"
+                  className="uppercase max-h-[70px] min-h-[50px] content-center border-b p-4 cursor-pointer"
                   style={{
                     borderLeft: filters["sortBy"].includes("price_low_to_high")
                       ? "4px solid black"
@@ -195,7 +196,7 @@ const FilterBox = ({
                   price (Low - High)
                 </div>
                 <div
-                  className="uppercase max-h-[70px] min-h-[50px] content-center border-b p-4"
+                  className="uppercase max-h-[70px] min-h-[50px] content-center border-b p-4 cursor-pointer"
                   style={{
                     borderLeft: filters["sortBy"].includes("newest")
                       ? "4px solid black"
@@ -206,7 +207,7 @@ const FilterBox = ({
                   Newest
                 </div>
                 <div
-                  className="uppercase max-h-[70px] min-h-[50px] content-center border-b p-4"
+                  className="uppercase max-h-[70px] min-h-[50px] content-center border-b p-4 cursor-pointer"
                   style={{
                     borderLeft: filters["sortBy"].includes("top_sellers")
                       ? "4px solid black"
@@ -217,7 +218,7 @@ const FilterBox = ({
                   top sellers
                 </div>
                 <div
-                  className="uppercase max-h-[70px] min-h-[50px] content-center p-4"
+                  className="uppercase max-h-[70px] min-h-[50px] content-center p-4 cursor-pointer"
                   style={{
                     borderLeft: filters["sortBy"].includes("price_high_to_low")
                       ? "4px solid black"
@@ -248,7 +249,7 @@ const FilterBox = ({
                 {category?.map((items: Record<string, any>, index) => {
                   return (
                     <div key={index}>
-                      <div className="uppercase max-h-[70px] min-h-[50px] content-center border-b p-4 flex gap-2">
+                      <div className="uppercase max-h-[70px] min-h-[50px] content-center border-b p-4 flex gap-2 cursor-pointer">
                         <CustomToggleSwitch
                           value={filters["categories"].includes(items?.title)}
                           onChange={(val: boolean) =>
@@ -279,7 +280,7 @@ const FilterBox = ({
                     <div
                       key={index}
                       style={{ backgroundColor: `${items.color_code}` }}
-                      className="h-8 border flex justify-center items-center"
+                      className="h-8 border flex justify-center items-center cursor-pointer"
                       onClick={() =>
                         updateData(
                           "colors",

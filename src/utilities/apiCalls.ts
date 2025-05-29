@@ -109,7 +109,7 @@ export const ServerSideGetWithParams = async (token: string | undefined, url: st
         data: "",
         status: false,
       };
-      const URL = url + "/" + id;
+      const URL = url ;
       const res = await PATCH(URL, payload, token);
       const { status, data } = res;
       if (status === 200) {

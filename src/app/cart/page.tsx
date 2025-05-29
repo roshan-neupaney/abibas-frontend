@@ -25,6 +25,8 @@ async function getData(token: string) {
 const CartPage = async () => {
   const token = cookies().get("access_token")?.value || "";
   const { cartItems, userDetail }: any = await getData(token);
+  console.log('userDetail', userDetail);
+
 
   const itemsPrice = cartItems.data
     .reduce(

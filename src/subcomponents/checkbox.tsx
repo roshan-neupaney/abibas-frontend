@@ -22,7 +22,7 @@ export const CustomToggleSwitch = ({
         <span className="slider"></span>
       </label>
       {title && (
-        <label htmlFor="checkbox" className="label">
+        <label htmlFor="checkbox" className="label cursor-pointer">
           {title}
         </label>
       )}

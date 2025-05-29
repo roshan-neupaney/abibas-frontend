@@ -107,9 +107,9 @@ const LoginModal = ({ open, handleClose, setCookies }: LoginModalProps) => {
     <>
       {open && (
         <div className="flex fixed top-0 left-0 w-full h-full justify-center items-center gap-2 bg-[#000000a3] z-50">
-          <div className="flex flex-1 relative media-960:max-w-[450px] max-h-[80vh] flex-col  bg-[#f9f7f7] shadow-2xl p-5">
+          <div className="flex flex-1 relative media-960:max-w-[450px] max-w-72 max-h-[80vh] flex-col bg-[#f9f7f7] shadow-2xl p-0 md:p-5">
             <div
-              className="flex justify-center items-center absolute h-[50px] w-[50px] bg-[#ffffff] -right-6 -top-6 border border-black"
+              className="flex justify-center items-center absolute h-[30px] w-[30px] md:h-[50px] md:w-[50px] bg-[#ffffff] md:-right-6 md:-top-6 -right-4 -top-4 border border-black"
               onClick={handleClose}
             >
               <Image src={crossIcon} height={30} width={30} alt="" />
@@ -166,7 +166,7 @@ const LoginModal = ({ open, handleClose, setCookies }: LoginModalProps) => {
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col py-4 px-5 gap-4">
+              <div className="flex flex-col py-4 px-5 gap-4 !h-full overflow-auto border noScrollBar">
                 <CustomInput
                   title="Firstname"
                   value={formData.firstName}

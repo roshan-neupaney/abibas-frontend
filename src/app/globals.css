@@ -165,6 +165,11 @@ body::-webkit-scrollbar {
   height: 0px;
 }
 
+.noScrollBar::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
 .recommendedSlider {
   --sb-track-color: #eceff1;
   --sb-thumb-color: #190000;

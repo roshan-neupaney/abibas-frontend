@@ -52,6 +52,8 @@ export default async function RootLayout({
     });
   };
 
+  const token = await cookies().get('access_token')?.value;
+
   return (
     <html lang="en">
       <body
@@ -64,7 +66,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <Toaster />
-          <Navbar setCookies={setCookies} />
+          <Navbar setCookies={setCookies} token={token} />
           {children}
           <Footer />
         </ThemeProvider>

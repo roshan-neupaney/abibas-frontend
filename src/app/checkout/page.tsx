@@ -12,7 +12,7 @@ import CheckoutProductCard from "../../../components/checkout/checkoutProductCar
 import { authorization } from "../../../hoc/auth";
 
 async function getData(token: string) {
-  authorization(token)
+  authorization(token);
   try {
     const response = [
       await ServerSideGet(token, CRUD_ADD_TO_CART),
