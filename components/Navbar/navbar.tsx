@@ -62,13 +62,13 @@ const Navbar = ({ setCookies, token }: NavbarProps) => {
           </Link>
         </div>
         <div className="col-span-2 flex gap-5 p-2 justify-end items-center">
-          <span>
+          <span className="cursor-pointer" onClick={checkAuthorization}>
             <Image src={ProfileIcon} width={20} height={20} alt="" />
           </span>
-          <span>
+          <span className="cursor-pointer">
             <Image src={SearchIcon} width={20} height={20} alt="" />
           </span>
-          <span>
+          <span className="cursor-pointer">
             <Image src={ShoppingBag} width={20} height={20} alt="" />
           </span>
         </div>
@@ -121,14 +121,14 @@ const Navbar = ({ setCookies, token }: NavbarProps) => {
 
           <div className="flex col-span-3 gap-5 justify-end items-end">
             <Search/>
-            <span className="min-w-5" onClick={checkAuthorization}>
+            <span className="min-w-5 cursor-pointer" onClick={checkAuthorization}>
               <Image src={ProfileIcon} width={20} height={20} alt="" />
             </span>
-            <span className="min-w-5">
+            <span className="min-w-5 cursor-pointer">
               <Image src={FavoriteIcon} width={20} height={20} alt="" />
             </span>
             <Link href={"/cart"}>
-              <span className="min-w-5">
+              <span className="min-w-5 cursor-pointer">
                 <Image src={ShoppingBag} width={23} height={20} alt="" />
               </span>
             </Link>
