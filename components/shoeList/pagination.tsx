@@ -9,12 +9,11 @@ interface PaginationProps {
   totalData: number;
   searchParams: searchParamsProps;
   slug: string;
-  shoe: any;
   pageSize: number;
 }
 
 
-const Pagination = ({ searchParams, slug, totalData, pageSize, shoe }: PaginationProps) => {
+const Pagination = ({ searchParams, slug, totalData, pageSize }: PaginationProps) => {
   const router = useRouter();
   const { page = 1, ...rest } = searchParams;
   const queryParams = new URLSearchParams(rest).toString();

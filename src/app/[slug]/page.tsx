@@ -119,7 +119,6 @@ const ShoePage = async ({ params, searchParams }: ShoePageProps) => {
         totalData={shoe_list?.totalData}
         searchParams={searchParams}
         slug={slug}
-        shoe={shoe_list}
         pageSize={shoe_list.pageSize}
       />
     </div>
