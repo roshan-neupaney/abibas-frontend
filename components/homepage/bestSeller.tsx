@@ -88,6 +88,7 @@ const BestSeller = ({ token, shoeTopSellers, shoeLatest }: any) => {
               <div key={index}>
                 <ProductCard
                   title={items?.title}
+                  showFav={false}
                   category={items?.category?.title}
                   image={items?.colorVariation[0]?.image_url}
                   price={items.price}
