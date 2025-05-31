@@ -116,7 +116,7 @@ const Esewa = ({
             name="submitButton"
             className="w-0 h-0 opacity-0"
           />
-          <span className="bg-white h-10 w-28 fle">
+          <span className="bg-white h-10 w-28 flex cursor-pointer">
             <LazyImage
               src={EsewaLogo}
               width={100}
