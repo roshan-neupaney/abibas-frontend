@@ -42,7 +42,7 @@ const FilterBox = ({
   });
 
   useEffect(() => {
-    router.replace(
+    router.push(
       `${
         filters["categories"].length > 0
           ? filters["categories"].join("|")

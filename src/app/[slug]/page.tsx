@@ -9,13 +9,21 @@ import {
   CRUD_SHOE,
 } from "../../../config/endpoints";
 import ProductCard from "../../../components/productCard";
+import Pagination from "../../../components/shoeList/pagination";
 
 async function getData(
   token: string | undefined,
   slug: string,
   searchParams: searchParamsProps
 ) {
-  const { colors, brands, sortBy, search } = searchParams;
+  const {
+    colors,
+    brands,
+    sortBy,
+    search,
+    page = 1,
+    pageSize = 20,
+  } = searchParams;
   const categories = slug === "search" ? "" : slug;
   try {
     const res = [
@@ -25,7 +33,9 @@ async function getData(
       await ServerSideGetWithParams(
         token,
         CRUD_SHOE,
-        `categories=${categories}&colors=${colors ?? ""}&brands=${brands ?? ""}&sortBy=${sortBy ?? ""}&search=${search ?? ''}`
+        `page=${page}&pageSize=${pageSize}&categories=${categories}&colors=${
+          colors ?? ""
+        }&brands=${brands ?? ""}&sortBy=${sortBy ?? ""}&search=${search ?? ""}`
       ),
     ];
     const [category, color, brand, shoe_list] = res;
@@ -44,6 +54,8 @@ export interface searchParamsProps {
   brands?: string;
   sortBy?: string;
   search?: string;
+  page?: string;
+  pageSize?: string;
 }
 
 interface ShoePageProps {
@@ -59,6 +71,7 @@ const ShoePage = async ({ params, searchParams }: ShoePageProps) => {
     slug,
     searchParams
   );
+
   return (
     <div className="p-4 m-auto media-960:max-w-[1280px]">
       {/* title header */}
@@ -68,9 +81,11 @@ const ShoePage = async ({ params, searchParams }: ShoePageProps) => {
             className="font-bold uppercase text-2xl media-600:text-3xl xl:text-[40px] tracking-[2px]"
             style={{ fontFamily: "var(--font-adineue)" }}
           >
-            {slug === "search" ? "All" : slug} Shoes
+            {slug === "search" ? "All" : slug.replaceAll('%7C', ' | ')} Shoes
           </span>{" "}
-          <span className="text-xs text-[#767677]">({shoe_list?.data?.length})</span>
+          <span className="text-xs text-[#767677]">
+            ({shoe_list?.totalData})
+          </span>
         </div>
         <FilterBox
           color={color?.data}
@@ -87,6 +102,7 @@ const ShoePage = async ({ params, searchParams }: ShoePageProps) => {
             <React.Fragment key={index}>
               <ProductCard
                 title={items.title}
+                showFav={false}
                 image={items?.colorVariation[0]?.image_url}
                 category={items?.category?.title}
                 price={items?.price}
@@ -99,6 +115,13 @@ const ShoePage = async ({ params, searchParams }: ShoePageProps) => {
           );
         })}
       </div>
+      <Pagination
+        totalData={shoe_list?.totalData}
+        searchParams={searchParams}
+        slug={slug}
+        shoe={shoe_list}
+        pageSize={shoe_list.pageSize}
+      />
     </div>
   );
 };

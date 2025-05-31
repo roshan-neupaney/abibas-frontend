@@ -42,15 +42,21 @@ export const ServerSideGet = async (token: string | undefined, url: string) => {
 export const ServerSideGetWithParams = async (token: string | undefined, url: string, params: string) => {
     const response = {
       status: false,
-      data: {}
+      data: {},
+      page: 1,
+      pageSize: 10,
+      totalData: ''
     };
   
     try {
       const URL = url+ '?' + params;
-      const res = await SERVER_SIDE_GET(URL, token);
-      if (res?.status === 200) {
+      const {data, status} = await SERVER_SIDE_GET(URL, token);
+      if (status === 200) {
         response.status = true;
-        response.data = res.data;
+        response.data = data.data;
+        response.page = data.page;
+        response.pageSize = data.pageSize;
+        response.totalData = data.totalData;
       }
     } catch (error) {
       console.error('Error while fetching', error);

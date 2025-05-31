@@ -149,6 +149,7 @@ const MainPage = async () => {
                   <ProductCard
                     title={items?.title}
                     price={items.price}
+                    showFav={false}
                     category={items?.category.title}
                     image={items?.colorVariation[0].image_url}
                     className="md:w-[316px] xl:w-[380px]"

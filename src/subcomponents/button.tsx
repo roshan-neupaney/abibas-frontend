@@ -10,6 +10,7 @@ interface ButtonProps {
   iconHeight?: number;
   onClick?: any;
   disabled?: boolean;
+  disabledButton?: boolean;
 }
 
 export const Button = ({
@@ -21,13 +22,14 @@ export const Button = ({
   iconHeight = 20,
   onClick,
   disabled = false,
+  disabledButton = false
 }: ButtonProps) => {
   return (
     <button
-      className={`flex border border-black w-fit cursor-pointer ${className}`}
+      className={`flex border border-black w-fit cursor-pointer ${className} disabled:cursor-not-allowed`}
       style={{ ...style }}
       onClick={onClick}
-      disabled={disabled}
+      disabled={disabledButton}
       type="button"
     >
       {!disabled ? (

@@ -55,6 +55,7 @@ const BestSeller = ({ token, shoeTopSellers, shoeLatest }: any) => {
                   <ProductCard
                     image={items?.colorVariation[0]?.image_url}
                     price={items.price}
+                    showFav={false}
                     className="w-full"
                     token={token}
                     id={items?.id}
