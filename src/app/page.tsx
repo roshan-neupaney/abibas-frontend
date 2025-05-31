@@ -42,8 +42,6 @@ async function getData(token: string | undefined) {
 const MainPage = async () => {
   const token = cookies().get("access_token")?.value;
   const { shoe_latest, shoe_top_sellers, collab_recommends }: any = await getData(token);
-  // console.log(shoe_latest, "shoe_latest", shoe_top_sellers);
-  console.log('collab_recommends', collab_recommends)
   const featuredData = [
     {
       title: "HOLIDAY '24",
@@ -68,7 +66,6 @@ const MainPage = async () => {
     },
   ];
   const recommendation = collab_recommends?.data?.length > 0 ? collab_recommends?.data : [];
-  console.log('collab_recommends', collab_recommends)
   return (
     <div>
       <div className="flex relative">

@@ -15,12 +15,10 @@ interface PaginationProps {
 
 
 const Pagination = ({ searchParams, slug, totalData, pageSize, shoe }: PaginationProps) => {
-    console.log('shoe', shoe)
   const router = useRouter();
   const { page = 1, ...rest } = searchParams;
   const queryParams = new URLSearchParams(rest).toString();
   const pageCount = Math.ceil(totalData / pageSize);
-  console.log(pageCount)
 
   const handlePagination = (nextPage: string) => {
     router.push(`${slug}?page=${nextPage}&${queryParams}`);
