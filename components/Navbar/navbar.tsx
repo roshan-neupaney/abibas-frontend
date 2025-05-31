@@ -77,7 +77,7 @@ const Navbar = ({ setCookies, token }: NavbarProps) => {
       <div className="navbar-banner">
         <div className="hidden media-960:flex gap-5 justify-end font-adihaus font-normal px-4 text-xs leading-6">
           <span>help</span>
-          <span>orders and returns</span>
+          <span className="cursor-pointer" onClick={() => router.push('/order')}>orders and returns</span>
           <span>join adiClub</span>
           <span>
             <Image src={FlagNepal} width={20} height={20} alt="" />
