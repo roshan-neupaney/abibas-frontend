@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "../../components/themeProvider";
-import Navbar from "../../components/Navbar/navbar";
+import { ThemeProvider } from "../components/themeProvider";
 import localFont from "next/font/local";
-import Footer from "../../components/Footer/footer";
 import { Toaster } from "react-hot-toast";
-import { cookies } from "next/headers";
 
 const AdihausDIN = localFont({
   src: [
@@ -42,17 +39,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const setCookies = async (token: string) => {
-    "use server";
-    cookies().set({
-      name: "access_token",
-      value: `Bearer ${token}`,
-      httpOnly: true,
-      maxAge: 60 * 60 * 24 * 30,
-    });
-  };
-
-  const token = await cookies().get('access_token')?.value;
 
   return (
     <html lang="en">
@@ -66,9 +52,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <Toaster />
-          <Navbar setCookies={setCookies} token={token} />
           {children}
-          <Footer />
         </ThemeProvider>
       </body>
     </html>

@@ -31,6 +31,7 @@ export const Button = ({
       onClick={onClick}
       disabled={disabledButton}
       type="button"
+      aria-label="this is a button"
     >
       {!disabled ? (
         <div className="flex flex-1 justify-between items-center h-8 gap-2">
@@ -72,6 +73,7 @@ export const ButtonWithShadow = ({
       onClick={onClick}
       type="button"
       disabled={disabled}
+      aria-label="this is shadowed button"
     >
       {!disabled ? (
         <div className="flex flex-1 justify-between items-center h-8 gap-2">

@@ -24,7 +24,7 @@ export const Login_Post = async (url:string, payload: Record<string,any>) => {
 export const ServerSideGet = async (token: string | undefined, url: string) => {
     const response = {
       status: false,
-      data: {}
+      data: []
     };
   
     try {
