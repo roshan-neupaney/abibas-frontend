@@ -7,12 +7,11 @@ import ProductSlider from "../../components/productSlider";
 import VideoImageCard from "../../components/videoImageCard";
 import { cookies } from "next/headers";
 import { ServerSideGet, ServerSideGetWithParams } from "@/utilities/apiCalls";
-import { COLLABORATIVE_RECOMMENDATION, CRUD_SHOE } from "../../../config/endpoints";
+import { CRUD_SHOE } from "../../../config/endpoints";
 import Link from "next/link";
-import { authorization } from "../../../hoc/auth";
 import BestSeller from "../../components/homepage/bestSeller";
 
-async function getData(token: string | undefined) {
+async function getData() {
   // authorization(token);
   try {
     const response = [
@@ -47,7 +46,7 @@ async function getData(token: string | undefined) {
 
 const MainPage = async () => {
   const token = cookies().get("access_token")?.value;
-  const { shoe_latest, shoe_top_sellers, collab_recommends }: any = await getData(token);
+  const { shoe_latest, shoe_top_sellers, collab_recommends }: any = await getData();
   const featuredData = [
     {
       title: "HOLIDAY '24",
