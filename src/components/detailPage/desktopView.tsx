@@ -95,7 +95,7 @@ const DesktopView = ({
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error } = AddToCartValidation(beautifiedPayload);
       if (isValid) {
-        const res = await JsonPost(CRUD_ADD_TO_CART, beautifiedPayload, token);
+        const res = await JsonPost(CRUD_ADD_TO_CART, beautifiedPayload, token || '');
         const { status, statusCode }: any = res;
         if (status) {
           toast.success("Added to cart successfully");

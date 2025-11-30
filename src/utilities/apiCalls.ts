@@ -41,7 +41,7 @@ export const ServerSideGet = async (token: string | undefined, url: string) => {
 export const ServerSideGetWithParams = async (token: string | undefined, url: string, params: string) => {
     const response = {
       status: false,
-      data: {},
+      data: [],
       page: 1,
       pageSize: 10,
       totalData: ''

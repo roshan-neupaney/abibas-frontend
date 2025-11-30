@@ -13,35 +13,40 @@ import { authorization } from "../../../hoc/auth";
 import BestSeller from "../../components/homepage/bestSeller";
 
 async function getData(token: string | undefined) {
-  authorization(token);
+  // authorization(token);
   try {
     const response = [
-      await ServerSideGet(token, CRUD_SHOE),
+      await ServerSideGet(undefined, CRUD_SHOE),
       await ServerSideGetWithParams(
-        token,
+        undefined,
         CRUD_SHOE,
         `sortBy=newest&pageSize=15`
       ),
       await ServerSideGetWithParams(
-        token,
+        undefined,
         CRUD_SHOE,
         `sortBy=top_sellers&pageSize=15`
       ),
-      await ServerSideGet(
-        token,
-        COLLABORATIVE_RECOMMENDATION,
-      ),
+      // await ServerSideGet(
+      //   token,
+      //   COLLABORATIVE_RECOMMENDATION,
+      // ),
     ];
     const [shoes, shoe_latest, shoe_top_sellers, collab_recommends] = response;
     return { shoes, shoe_latest, shoe_top_sellers, collab_recommends };
   } catch (e) {
     console.error(e);
+    return {
+      shoes: { data: [] },
+      shoe_latest: { data: [] },
+      shoe_top_sellers: { data: [] },
+      collab_recommends: { data: [] },
+    };
   }
 }
 
 const MainPage = async () => {
   const token = cookies().get("access_token")?.value;
-  authorization(token);
   const { shoe_latest, shoe_top_sellers, collab_recommends }: any = await getData(token);
   const featuredData = [
     {

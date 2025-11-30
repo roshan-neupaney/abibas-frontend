@@ -6,18 +6,16 @@ import {
   CRUD_SHOE,
   HYBRID_RECOMMENDATION,
 } from "../../../../../../config/endpoints";
-import { authorization } from "../../../../../../hoc/auth";
 
 interface detailPageProps {
   params: { slug: string };
 }
 
-async function getData(slug_url: string, token: string | undefined) {
-  authorization(token);
+async function getData(slug_url: string) {
   try {
     const res = [
-      await ServerSideGetWithId(token, CRUD_SHOE, slug_url),
-      await ServerSideGetWithId(token, HYBRID_RECOMMENDATION, slug_url ),
+      await ServerSideGetWithId(undefined, CRUD_SHOE, slug_url),
+      await ServerSideGetWithId(undefined, HYBRID_RECOMMENDATION, slug_url ),
     ];
     const [shoe_details, hybrid_recommends]: any = res;
     return { shoe_details, hybrid_recommends };
@@ -29,7 +27,7 @@ async function getData(slug_url: string, token: string | undefined) {
 const DetailPage = async ({ params }: detailPageProps) => {
   const { slug } = params;
   const token = cookies().get("access_token")?.value;
-  const { shoe_details, hybrid_recommends }: any = await getData(slug, token);
+  const { shoe_details, hybrid_recommends }: any = await getData(slug);
   return (
     <div className="">
       <div className="shoe_id hidden">{shoe_details?.data?.id}</div>

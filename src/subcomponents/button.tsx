@@ -32,6 +32,7 @@ export const Button = ({
       disabled={disabledButton}
       type="button"
       aria-label="this is a button"
+      role="button"
     >
       {!disabled ? (
         <div className="flex flex-1 justify-between items-center h-8 gap-2">

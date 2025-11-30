@@ -37,7 +37,7 @@ const defaultError = {
 const LoginModal = ({ open, handleClose, setCookies }: LoginModalProps) => {
   const [formData, setFormData] = useState(defaultForm);
   const [formError, setFormError] = useState(defaultError);
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   const router = useRouter();
 
